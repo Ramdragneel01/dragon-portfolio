@@ -1,0 +1,23 @@
+[
+  {
+    "id": "hallucination-lens",
+    "title": "hallucination-lens",
+    "description": "Context-grounded faithfulness scorer for RAG responses using embedding similarity.",
+    "tags": ["Python", "RAG", "Evaluation"],
+    "github": "https://github.com/ramdragneel01/hallucination-lens"
+  },
+  {
+    "id": "mlops-sentinel",
+    "title": "mlops-sentinel",
+    "description": "Open observability stack for model latency, confidence, and drift detection.",
+    "tags": ["FastAPI", "Prometheus", "Recharts"],
+    "github": "https://github.com/ramdragneel01/mlops-sentinel"
+  },
+  {
+    "id": "agentic-research-assistant",
+    "title": "agentic-research-assistant",
+    "description": "LangGraph-based research flow with Searcher, Summarizer, and Critic traceability.",
+    "tags": ["LangGraph", "FastAPI", "SSE"],
+    "github": "https://github.com/ramdragneel01/agentic-research-assistant"
+  }
+]
