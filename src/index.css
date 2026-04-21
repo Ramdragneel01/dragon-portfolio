@@ -5,17 +5,47 @@
 
 :root {
   color-scheme: dark;
+  --bg-night: #071421;
+  --bg-deep: #0d2133;
+  --glow-ember: rgba(255, 107, 66, 0.36);
+  --glow-cyan: rgba(104, 216, 214, 0.28);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  font-family: "Sora", sans-serif;
   background:
-    radial-gradient(circle at 10% 10%, rgba(229, 57, 53, 0.2), transparent 35%),
-    radial-gradient(circle at 90% 80%, rgba(255, 107, 107, 0.15), transparent 30%),
-    #081522;
+    radial-gradient(circle at 8% 12%, var(--glow-ember), transparent 32%),
+    radial-gradient(circle at 92% 78%, var(--glow-cyan), transparent 30%),
+    linear-gradient(140deg, var(--bg-night) 0%, var(--bg-deep) 55%, #081522 100%);
+  background-attachment: fixed;
 }
 
 * {
   box-sizing: border-box;
+}
+
+*::selection {
+  background: rgba(255, 107, 66, 0.35);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #ffd166;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

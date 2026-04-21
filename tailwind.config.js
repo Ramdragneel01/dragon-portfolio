@@ -17,16 +17,23 @@ export default {
         glow: "0 0 30px rgba(229, 57, 53, 0.35)",
       },
       fontFamily: {
-        display: ["'Space Grotesk'", "sans-serif"],
+        display: ["'Bebas Neue'", "sans-serif"],
+        body: ["'Sora'", "sans-serif"],
       },
       keyframes: {
         floatIn: {
           "0%": { opacity: 0, transform: "translateY(16px)" },
           "100%": { opacity: 1, transform: "translateY(0)" },
         },
+        pulseGlow: {
+          "0%": { boxShadow: "0 0 0 rgba(255, 107, 66, 0.0)" },
+          "50%": { boxShadow: "0 0 36px rgba(255, 107, 66, 0.35)" },
+          "100%": { boxShadow: "0 0 0 rgba(255, 107, 66, 0.0)" },
+        },
       },
       animation: {
         floatIn: "floatIn 600ms ease-out forwards",
+        pulseGlow: "pulseGlow 2.4s ease-in-out infinite",
       },
     },
   },
