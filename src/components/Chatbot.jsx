@@ -231,7 +231,7 @@ function Chatbot({ config, apiBaseUrl }) {
         onClick={() => setOpen((prev) => !prev)}
         className="glass-button-primary rounded-full px-5 py-3 text-sm font-bold"
       >
-        {open ? "Close Chat" : "Open Chat"}
+        {open ? "Close Chat" : "Open AI Chat"}
       </button>
     </div>
   );
