@@ -8,8 +8,8 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { motion, useReducedMotion } from "framer-motion";
 
 const DEFAULT_ROLES = ["Data Scientist", "ML Engineer", "GenAI Builder"];
-const DRAGON_MODEL_PATH = "/asset/Dragon/Dragon.obj";
-const DRAGON_TEXTURE_PATH = "/asset/Dragon/Dragon.jpg";
+const DRAGON_MODEL_PATH = `${import.meta.env.BASE_URL}asset/Dragon/Dragon.obj`;
+const DRAGON_TEXTURE_PATH = `${import.meta.env.BASE_URL}asset/Dragon/Dragon.jpg`;
 
 const DRAGON_ACTIONS = {
   idle: {
