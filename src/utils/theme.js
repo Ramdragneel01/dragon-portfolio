@@ -22,7 +22,7 @@ export function setTheme(theme) {
 /**
  * Read current theme preference from storage.
  *
- * @returns {"light" | "dark" | "system"} Saved mode or system fallback.
+ * @returns {"light" | "dark" | "system"} Saved mode or dark fallback.
  */
 export function getTheme() {
   try {
@@ -34,7 +34,7 @@ export function getTheme() {
     // Ignore storage errors in restricted contexts.
   }
 
-  return "system";
+  return "dark";
 }
 
 /**

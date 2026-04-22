@@ -70,7 +70,21 @@ function Projects({ projects, config, loading = false }) {
                 >
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
-                      <h3 className="text-2xl font-semibold">{project.title}</h3>
+                      <h3 className="text-2xl font-semibold">
+                        {isGithubProject && projectLink ? (
+                          <a
+                            href={projectLink}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="hover:underline"
+                            aria-label={`Open ${project.title} on GitHub`}
+                          >
+                            {project.title}
+                          </a>
+                        ) : (
+                          project.title
+                        )}
+                      </h3>
                       {project.organization || project.period ? (
                         <p className="mt-2 text-xs uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                           {[project.organization, project.period].filter(Boolean).join(" - ")}
@@ -79,9 +93,21 @@ function Projects({ projects, config, loading = false }) {
                     </div>
                     <div className="flex flex-wrap items-center justify-end gap-2">
                       {isGithubProject ? (
-                        <span className="glass-chip rounded-full px-3 py-1 text-xs text-[rgba(var(--accent-rgb),0.95)]">
-                          GitHub Project
-                        </span>
+                        projectLink ? (
+                          <a
+                            href={projectLink}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="glass-chip rounded-full px-3 py-1 text-xs text-[rgba(var(--accent-rgb),0.95)] hover:underline"
+                            aria-label={`Open ${project.title} repository`}
+                          >
+                            GitHub Project
+                          </a>
+                        ) : (
+                          <span className="glass-chip rounded-full px-3 py-1 text-xs text-[rgba(var(--accent-rgb),0.95)]">
+                            GitHub Project
+                          </span>
+                        )
                       ) : null}
                       {tags.map((tag) => (
                         <span

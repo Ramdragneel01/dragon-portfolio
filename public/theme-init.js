@@ -2,9 +2,9 @@
 (function initThemeEarly() {
   try {
     var saved = localStorage.getItem("theme");
-    var mode = saved || "system";
+    var mode = saved || "dark";
     document.documentElement.setAttribute("data-theme", mode);
   } catch (_error) {
-    document.documentElement.setAttribute("data-theme", "system");
+    document.documentElement.setAttribute("data-theme", "dark");
   }
 })();
