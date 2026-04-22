@@ -24,6 +24,14 @@ function Chatbot({ config, apiBaseUrl }) {
     }
 
     const userMessage = { role: "user", content: question.trim() };
+    const history = messages
+      .slice(-4)
+      .filter((entry) => entry.role === "user" || entry.role === "assistant")
+      .map((entry) => ({
+        role: entry.role,
+        content: String(entry.content || "").slice(0, 500),
+      }));
+
     setMessages((prev) => [...prev, userMessage]);
     setQuestion("");
     setLoading(true);
@@ -37,6 +45,7 @@ function Chatbot({ config, apiBaseUrl }) {
         body: JSON.stringify({
           message: userMessage.content,
           systemPrompt: config?.systemPrompt,
+          history,
         }),
       });
 
@@ -64,17 +73,16 @@ function Chatbot({ config, apiBaseUrl }) {
   return (
     <div className="fixed bottom-4 right-4 z-50">
       {open && (
-        <div className="mb-3 w-[320px] rounded-2xl border border-dragon-red/35 bg-dragon-navySoft/95 p-4 shadow-glow md:w-[360px]">
-          <h3 className="mb-3 text-sm font-bold text-dragon-redGlow">
+        <div className="glass-card-strong mb-3 w-[320px] rounded-2xl p-4 md:w-[360px]">
+          <h3 className="mb-3 text-sm font-bold text-[rgba(var(--accent-rgb),0.95)]">
             {config?.title || "Dragon Assistant"}
           </h3>
           <div className="mb-3 max-h-64 space-y-2 overflow-y-auto pr-1">
             {messages.map((message, index) => (
               <div
                 key={`${message.role}-${index}`}
-                className={`rounded-lg p-2 text-sm ${
-                  message.role === "user" ? "bg-dragon-red/20" : "bg-dragon-navy"
-                }`}
+                className={`rounded-lg p-2 text-sm ${message.role === "user" ? "bg-[rgba(var(--accent-rgb),0.18)] text-[var(--text-primary)]" : "glass-card-soft text-[var(--text-primary)]"
+                  }`}
               >
                 {message.content}
               </div>
@@ -82,7 +90,7 @@ function Chatbot({ config, apiBaseUrl }) {
           </div>
           <div className="flex gap-2">
             <input
-              className="w-full rounded-lg border border-dragon-red/30 bg-dragon-navy px-3 py-2 text-sm outline-none focus:border-dragon-redGlow"
+              className="glass-input w-full px-3 py-2 text-sm"
               value={question}
               onChange={(event) => setQuestion(event.target.value)}
               onKeyDown={(event) => {
@@ -97,7 +105,7 @@ function Chatbot({ config, apiBaseUrl }) {
               type="button"
               onClick={sendMessage}
               disabled={loading}
-              className="rounded-lg bg-dragon-red px-3 py-2 text-sm font-semibold disabled:opacity-60"
+              className="glass-button-primary rounded-lg px-3 py-2 text-sm font-semibold disabled:opacity-60"
             >
               Send
             </button>
@@ -107,7 +115,7 @@ function Chatbot({ config, apiBaseUrl }) {
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="rounded-full bg-dragon-red px-5 py-3 text-sm font-bold text-white shadow-glow"
+        className="glass-button-primary rounded-full px-5 py-3 text-sm font-bold"
       >
         {open ? "Close Chat" : "Open Chat"}
       </button>

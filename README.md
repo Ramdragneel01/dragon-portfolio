@@ -42,14 +42,86 @@ Copy values into a local .env file:
 - `CHAT_RATE_LIMIT_PER_MINUTE`
 - `ANTHROPIC_API_KEY`
 - `ANTHROPIC_MODEL`
+- `ANTHROPIC_FAST_MODEL`
+- `CHAT_MAX_TOKENS`
+- `CHAT_HISTORY_CHAR_BUDGET`
+- `CHAT_FAST_MODEL_CHAR_THRESHOLD`
 - `EMAILJS_PUBLIC_KEY`
 - `EMAILJS_SERVICE_ID`
 - `EMAILJS_TEMPLATE_ID`
 - `GITHUB_USERNAME`
 - `GITHUB_TOKEN` (optional but recommended)
 - `MEDIUM_USERNAME`
+- `MEDIUM_TOTAL_ARTICLES` (fallback used when Medium feed is unavailable)
 
 See [.env.example](.env.example) for defaults.
+
+## Deploy to GitHub Pages (Project Page)
+
+This repository is configured for project-page deployment at:
+
+- `https://<github-username>.github.io/dragon-portfolio/`
+
+The frontend is static, but profile/chat/contact features require the Node API to be hosted separately.
+
+### 1. Deploy the backend API
+
+Deploy `server/index.js` to a Node host (for example Render, Railway, or Fly.io) and configure production environment variables:
+
+- `PORT`
+- `CORS_ORIGINS`
+- `ANTHROPIC_API_KEY`
+- `ANTHROPIC_MODEL`
+- `ANTHROPIC_FAST_MODEL`
+- `CHAT_MAX_TOKENS`
+- `CHAT_HISTORY_CHAR_BUDGET`
+- `CHAT_FAST_MODEL_CHAR_THRESHOLD`
+- `EMAILJS_PUBLIC_KEY`
+- `EMAILJS_SERVICE_ID`
+- `EMAILJS_TEMPLATE_ID`
+- `GITHUB_USERNAME`
+- `GITHUB_TOKEN` (optional)
+- `MEDIUM_USERNAME`
+- `MEDIUM_TOTAL_ARTICLES`
+
+Set `CORS_ORIGINS` to include your GitHub Pages origin, for example:
+
+- `https://<github-username>.github.io`
+
+### 2. Configure repository variables
+
+In GitHub repository settings, add Actions variable:
+
+- `VITE_API_BASE_URL` = `https://<your-backend-domain>/api`
+
+Optional override:
+
+- `VITE_BASE_PATH` (defaults to `/dragon-portfolio/`)
+
+### 3. Enable GitHub Pages deployment source
+
+In repository Settings -> Pages:
+
+- Source: `GitHub Actions`
+
+### 4. Publish updates
+
+Push changes to `main`. Workflow `.github/workflows/pages.yml` will:
+
+- install dependencies
+- run lint, tests, and API syntax checks
+- build the frontend
+- deploy `dist` to GitHub Pages
+
+### 5. Verify live deployment
+
+After deployment completes, validate:
+
+- app loads at `https://<github-username>.github.io/dragon-portfolio/`
+- no JavaScript or CSS asset 404 errors
+- profile data loads from backend
+- chat responses work
+- contact submission works
 
 ## Validation commands
 

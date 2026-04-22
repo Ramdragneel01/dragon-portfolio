@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 /**
  * Render project cards with support for static and live GitHub metadata.
  *
- * @param {{projects: Array<Record<string, any>>, config: Record<string, any>}} props Component props.
+ * @param {{projects: Array<Record<string, any>>, config: Record<string, any>, loading?: boolean}} props Component props.
  * @returns {JSX.Element} Projects section.
  */
-function Projects({ projects, config }) {
+function Projects({ projects, config, loading = false }) {
   return (
     <section className="py-16" id="projects">
       <motion.h2
@@ -20,7 +20,7 @@ function Projects({ projects, config }) {
         {config?.title}
       </motion.h2>
       <motion.p
-        className="mt-2 text-dragon-sand/80"
+        className="mt-2 text-[var(--text-secondary)]"
         initial={{ opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ amount: 0.3, once: true }}
@@ -28,48 +28,148 @@ function Projects({ projects, config }) {
       >
         {config?.subtitle}
       </motion.p>
-      <div className="mt-8 grid gap-6 md:grid-cols-2">
-        {projects.map((project, index) => {
-          const tags = project.tags?.length ? project.tags : ["Engineering"];
-
-          return (
-            <motion.article
-              key={project.id}
-              className="rounded-2xl border border-dragon-red/25 bg-dragon-navySoft/60 p-6 transition hover:-translate-y-1 hover:border-dragon-redGlow"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ amount: 0.2, once: true }}
-              transition={{ duration: 0.5, delay: index * 0.07, ease: "easeOut" }}
-            >
-              <h3 className="text-xl font-semibold">{project.title}</h3>
-              <p className="mt-2 text-dragon-sand/85">{project.description}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <span
-                    key={`${project.id}-${tag}`}
-                    className="rounded-full border border-dragon-red/30 px-3 py-1 text-xs"
-                  >
-                    {tag}
-                  </span>
-                ))}
+      <div className="mt-8">
+        {loading ? (
+          <div
+            className="space-y-6"
+            role="status"
+            aria-live="polite"
+            aria-label="Loading project cards"
+            aria-busy="true"
+          >
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={`project-skeleton-${index}`} className="glass-card rounded-3xl p-6 md:p-8">
+                <div className="grid gap-3">
+                  <div className="skeleton skeleton-text--lg" style={{ width: "60%" }} />
+                  <div className="skeleton skeleton-text" style={{ width: "35%" }} />
+                  <div className="skeleton skeleton-text" style={{ width: "96%" }} />
+                  <div className="skeleton skeleton-text" style={{ width: "88%" }} />
+                  <div className="skeleton h-24 rounded-xl" />
+                </div>
               </div>
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {projects.map((project, index) => {
+              const tags = project.tags?.length ? project.tags : ["Engineering"];
+              const tools = Array.isArray(project.tools) ? project.tools : [];
+              const actions = Array.isArray(project.actions) ? project.actions : [];
+              const isGithubProject = project.source === "github";
+              const projectLink = project.github || project.link;
+              const projectLinkLabel = project.github ? "View on GitHub" : project.linkLabel || "Open project";
 
-              <div className="mt-4 flex gap-4 text-xs text-dragon-sand/70">
-                <span>Stars: {project.stars ?? 0}</span>
-                <span>Forks: {project.forks ?? 0}</span>
-              </div>
+              return (
+                <motion.article
+                  key={project.id}
+                  className="glass-card rounded-3xl p-6 transition hover:-translate-y-1 md:p-8"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ amount: 0.2, once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.07, ease: "easeOut" }}
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-2xl font-semibold">{project.title}</h3>
+                      {project.organization || project.period ? (
+                        <p className="mt-2 text-xs uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                          {[project.organization, project.period].filter(Boolean).join(" - ")}
+                        </p>
+                      ) : null}
+                    </div>
+                    <div className="flex flex-wrap items-center justify-end gap-2">
+                      {isGithubProject ? (
+                        <span className="glass-chip rounded-full px-3 py-1 text-xs text-[rgba(var(--accent-rgb),0.95)]">
+                          GitHub Project
+                        </span>
+                      ) : null}
+                      {tags.map((tag) => (
+                        <span
+                          key={`${project.id}-${tag}`}
+                          className="glass-chip rounded-full px-3 py-1 text-xs text-[var(--text-primary)]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
-              <a
-                className="mt-5 inline-block text-sm font-semibold text-dragon-redGlow hover:underline"
-                href={project.github}
-                target="_blank"
-                rel="noreferrer"
-              >
-                View on GitHub
-              </a>
-            </motion.article>
-          );
-        })}
+                  <p className="mt-4 text-[var(--text-secondary)]">{project.description}</p>
+
+                  {project.imageUrl ? (
+                    <img
+                      src={project.imageUrl}
+                      alt={`${project.title} preview`}
+                      loading="lazy"
+                      className="mt-4 h-56 w-full rounded-2xl border border-[var(--glass-border)] object-cover"
+                    />
+                  ) : null}
+
+                  {project.situation ? (
+                    <div className="mt-4 rounded-2xl border border-[var(--glass-border)] bg-[color-mix(in_srgb,var(--glass-surface)_72%,transparent_28%)] p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[rgba(var(--accent-rgb),0.95)]">Situation</p>
+                      <p className="mt-2 text-sm text-[var(--text-secondary)]">{project.situation}</p>
+                    </div>
+                  ) : null}
+
+                  {project.task ? (
+                    <div className="mt-3 rounded-2xl border border-[var(--glass-border)] bg-[color-mix(in_srgb,var(--glass-surface)_72%,transparent_28%)] p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[rgba(var(--accent-rgb),0.95)]">Task</p>
+                      <p className="mt-2 text-sm text-[var(--text-secondary)]">{project.task}</p>
+                    </div>
+                  ) : null}
+
+                  {actions.length ? (
+                    <div className="mt-3 rounded-2xl border border-[var(--glass-border)] bg-[color-mix(in_srgb,var(--glass-surface)_72%,transparent_28%)] p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[rgba(var(--accent-rgb),0.95)]">Action</p>
+                      <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-[var(--text-secondary)]">
+                        {actions.map((actionItem, actionIndex) => (
+                          <li key={`${project.id}-action-${actionIndex}`}>{actionItem}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+
+                  {project.result ? (
+                    <div className="mt-3 rounded-2xl border border-[var(--glass-border)] bg-[color-mix(in_srgb,var(--glass-surface)_72%,transparent_28%)] p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[rgba(var(--accent-rgb),0.95)]">Result</p>
+                      <p className="mt-2 text-sm text-[var(--text-secondary)]">{project.result}</p>
+                    </div>
+                  ) : null}
+
+                  {project.currentWork ? (
+                    <p className="mt-3 text-sm text-[var(--text-secondary)]">
+                      <span className="font-semibold text-[var(--text-primary)]">Current Work:</span> {project.currentWork}
+                    </p>
+                  ) : null}
+
+                  {tools.length ? (
+                    <p className="mt-3 text-sm text-[var(--text-secondary)]">
+                      <span className="font-semibold text-[var(--text-primary)]">Tools:</span> {tools.join(", ")}
+                    </p>
+                  ) : null}
+
+                  {isGithubProject ? (
+                    <p className="mt-2 text-xs text-[var(--text-secondary)]">
+                      Generated from GitHub repository metadata and activity signals.
+                    </p>
+                  ) : null}
+
+                  {projectLink ? (
+                    <a
+                      className="mt-5 inline-block text-sm font-semibold text-[rgba(var(--accent-rgb),0.95)] hover:underline"
+                      href={projectLink}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {projectLinkLabel}
+                    </a>
+                  ) : null}
+                </motion.article>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );

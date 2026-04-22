@@ -2,11 +2,53 @@
 import { useState } from "react";
 import { buildApiUrl } from "../utils/api";
 
-function Contact({ config, apiBaseUrl }) {
+function Contact({ config, apiBaseUrl, profile, loading = false }) {
   const [status, setStatus] = useState("");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState({ name: "", email: "", message: "" });
   const contactApiUrl = buildApiUrl("/contact", apiBaseUrl);
+  const linkedinUrl = profile?.contact?.linkedin || "https://www.linkedin.com/in/ramprakashdhulipudi/";
+  const githubUrl = profile?.contact?.github || "https://github.com/Ramdragneel01";
+  const mediumUrl = profile?.contact?.medium || "https://medium.com/@RamPrakashD";
+
+  const socialLinks = [
+    { label: "LinkedIn", href: linkedinUrl },
+    { label: "GitHub", href: githubUrl },
+    { label: "Medium", href: mediumUrl },
+  ];
+
+  if (loading) {
+    return (
+      <section className="py-16" id="contact">
+        <h2 className="text-3xl font-bold">{config?.title}</h2>
+
+        <div
+          className="mt-6 grid gap-3 sm:grid-cols-3"
+          role="status"
+          aria-live="polite"
+          aria-label="Loading contact links"
+          aria-busy="true"
+        >
+          <div className="skeleton h-[50px] rounded-2xl" />
+          <div className="skeleton h-[50px] rounded-2xl" />
+          <div className="skeleton h-[50px] rounded-2xl" />
+        </div>
+
+        <div
+          className="glass-card mt-6 max-w-2xl space-y-4 rounded-3xl p-6"
+          role="status"
+          aria-live="polite"
+          aria-label="Loading contact form"
+          aria-busy="true"
+        >
+          <div className="skeleton h-[48px] rounded-xl" />
+          <div className="skeleton h-[48px] rounded-xl" />
+          <div className="skeleton h-32 rounded-xl" />
+          <div className="skeleton h-[44px] w-40 rounded-lg" />
+        </div>
+      </section>
+    );
+  }
 
   /**
    * Validate user input before sending it to the backend contact endpoint.
@@ -78,9 +120,24 @@ function Contact({ config, apiBaseUrl }) {
   return (
     <section className="py-16" id="contact">
       <h2 className="text-3xl font-bold">{config?.title}</h2>
-      <form className="mt-6 max-w-2xl space-y-4" onSubmit={handleSubmit}>
+
+      <div className="mt-6 grid gap-3 sm:grid-cols-3">
+        {socialLinks.map((socialLink) => (
+          <a
+            key={socialLink.label}
+            href={socialLink.href}
+            target="_blank"
+            rel="noreferrer"
+            className="glass-card-soft rounded-2xl px-4 py-3 text-sm font-semibold text-[var(--text-primary)] transition hover:-translate-y-0.5 hover:text-[rgba(var(--accent-rgb),0.95)]"
+          >
+            {socialLink.label}
+          </a>
+        ))}
+      </div>
+
+      <form className="glass-card mt-6 max-w-2xl space-y-4 rounded-3xl p-6" onSubmit={handleSubmit}>
         <input
-          className="w-full rounded-lg border border-dragon-red/30 bg-dragon-navySoft px-4 py-3 outline-none focus:border-dragon-redGlow"
+          className="glass-input w-full px-4 py-3"
           type="text"
           value={form.name}
           onChange={(event) => {
@@ -91,9 +148,9 @@ function Contact({ config, apiBaseUrl }) {
           required
           aria-invalid={Boolean(errors.name)}
         />
-        {errors.name ? <p className="text-sm text-dragon-redGlow">{errors.name}</p> : null}
+        {errors.name ? <p className="text-sm text-red-500">{errors.name}</p> : null}
         <input
-          className="w-full rounded-lg border border-dragon-red/30 bg-dragon-navySoft px-4 py-3 outline-none focus:border-dragon-redGlow"
+          className="glass-input w-full px-4 py-3"
           type="email"
           value={form.email}
           onChange={(event) => {
@@ -104,9 +161,9 @@ function Contact({ config, apiBaseUrl }) {
           required
           aria-invalid={Boolean(errors.email)}
         />
-        {errors.email ? <p className="text-sm text-dragon-redGlow">{errors.email}</p> : null}
+        {errors.email ? <p className="text-sm text-red-500">{errors.email}</p> : null}
         <textarea
-          className="min-h-32 w-full rounded-lg border border-dragon-red/30 bg-dragon-navySoft px-4 py-3 outline-none focus:border-dragon-redGlow"
+          className="glass-input min-h-32 w-full px-4 py-3"
           value={form.message}
           onChange={(event) => {
             setForm((prev) => ({ ...prev, message: event.target.value }));
@@ -116,14 +173,14 @@ function Contact({ config, apiBaseUrl }) {
           required
           aria-invalid={Boolean(errors.message)}
         />
-        {errors.message ? <p className="text-sm text-dragon-redGlow">{errors.message}</p> : null}
+        {errors.message ? <p className="text-sm text-red-500">{errors.message}</p> : null}
         <button
-          className="rounded-lg bg-dragon-red px-5 py-3 font-semibold text-white transition hover:bg-dragon-redGlow"
+          className="glass-button-primary rounded-lg px-5 py-3 font-semibold transition"
           type="submit"
         >
           {config?.submitButtonLabel || "Send Message"}
         </button>
-        <p className="text-sm text-dragon-sand/80" aria-live="polite">
+        <p className="text-sm text-[var(--text-secondary)]" aria-live="polite">
           {status}
         </p>
       </form>

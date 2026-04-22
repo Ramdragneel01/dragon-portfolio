@@ -14,40 +14,73 @@ export default function usePortfolioData() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const controller = new AbortController();
+    let isMounted = true;
+    let intervalId;
 
     /**
-     * Fetch profile payload with abort support and safe fallback behavior.
+     * Load profile payload and optionally preserve current UI state on transient failures.
+     *
+     * @param {{silent?: boolean}} options Fetch behavior options.
      */
-    async function loadProfile() {
+    async function loadProfile(options = {}) {
+      const { silent = false } = options;
+
       try {
-        const response = await fetch(buildApiUrl("/profile"), {
-          signal: controller.signal,
-        });
+        const response = await fetch(buildApiUrl("/profile"));
 
         if (!response.ok) {
           throw new Error(`Profile request failed with status ${response.status}`);
         }
 
         const payload = await response.json();
-        setData(payload);
-        setError("");
-      } catch (fetchError) {
-        if (fetchError.name === "AbortError") {
+        if (!isMounted) {
           return;
         }
 
-        setData(profileFallback);
-        setError("Live profile data is unavailable right now. Showing fallback profile data.");
+        setData(payload);
+        setError("");
+      } catch (fetchError) {
+        if (!isMounted || fetchError.name === "AbortError") {
+          return;
+        }
+
+        if (!silent) {
+          setData(profileFallback);
+          setError("Live profile data is unavailable right now. Showing fallback profile data.");
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     }
 
     loadProfile();
 
+    // Keep profile data near-real-time while respecting resource efficiency.
+    intervalId = window.setInterval(() => {
+      loadProfile({ silent: true });
+    }, 45_000);
+
+    /**
+     * Refresh data when the tab becomes active again.
+     */
+    function handleForegroundRefresh() {
+      if (document.visibilityState === "visible") {
+        loadProfile({ silent: true });
+      }
+    }
+
+    document.addEventListener("visibilitychange", handleForegroundRefresh);
+    window.addEventListener("focus", handleForegroundRefresh);
+
     return () => {
-      controller.abort();
+      isMounted = false;
+      if (intervalId) {
+        window.clearInterval(intervalId);
+      }
+      document.removeEventListener("visibilitychange", handleForegroundRefresh);
+      window.removeEventListener("focus", handleForegroundRefresh);
     };
   }, []);
 

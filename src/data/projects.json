@@ -1,23 +1,183 @@
 [
   {
-    "id": "hallucination-lens",
-    "title": "hallucination-lens",
-    "description": "Context-grounded faithfulness scorer for RAG responses using embedding similarity.",
-    "tags": ["Python", "RAG", "Evaluation"],
-    "github": "https://github.com/ramdragneel01/hallucination-lens"
+    "id": "automated-ml-model-prediction-annotation",
+    "title": "Automated ML Model Prediction and Data Annotation System",
+    "period": "Feb 2025 - Apr 2025",
+    "organization": "IVIS International Pvt Ltd",
+    "description": "Built a lightweight ML assistant that analyzes datasets, recommends suitable models, and speeds up computer-vision annotation workflows.",
+    "situation": "During internship work on surveillance datasets, model selection and manual image annotation consumed significant R&D time and slowed experiments.",
+    "task": "Design a semi-automated real-time pipeline that evaluates dataset characteristics, recommends model families, and accelerates preprocessing and annotation without relying on BigQuery ML for prediction tasks.",
+    "actions": [
+      "Implemented dataset diagnostics for data types, missing values, descriptive statistics, and feature correlation.",
+      "Built a rule-based plus meta-learning recommender with MCP API signals to rank models by dataset profile and historical outcomes.",
+      "Added support for classification, regression, clustering, time-series, matrix factorization, and anomaly workflows.",
+      "Enabled TensorFlow batch prediction pipelines and hyperparameter tuning through Vertex AI Vizier.",
+      "Created an annotation assistant using YOLOv5, OpenCV, and LabelImg for pre-labeling with interactive correction UI."
+    ],
+    "currentWork": "Enhancing edge-device feedback loops and annotation throughput on Raspberry Pi class devices for assistive scenarios.",
+    "result": "Reduced model selection effort by about 60 percent and annotation effort by about 40 percent, improving experimentation speed and model fit quality.",
+    "tools": [
+      "Python",
+      "Scikit-learn",
+      "YOLOv5",
+      "LabelImg",
+      "Streamlit",
+      "FastAPI",
+      "OpenCV",
+      "PyTorch",
+      "TensorFlow",
+      "Vertex AI Vizier",
+      "MCP API"
+    ],
+    "tags": ["Python", "MLOps", "Computer Vision"]
   },
   {
-    "id": "mlops-sentinel",
-    "title": "mlops-sentinel",
-    "description": "Open observability stack for model latency, confidence, and drift detection.",
-    "tags": ["FastAPI", "Prometheus", "Recharts"],
-    "github": "https://github.com/ramdragneel01/mlops-sentinel"
+    "id": "autonomous-workflow-optimization-agentathon",
+    "title": "Autonomous Workflow Optimization with Intelligent Agents",
+    "period": "Mar 2025 - Apr 2025",
+    "organization": "Accenture (Google Cloud Agentathon)",
+    "description": "Developed a multi-agent workflow optimization platform for dynamic tasking, error handling, and real-time decision support.",
+    "situation": "Manual enterprise workflows were rigid, intervention-heavy, and lacked real-time adaptive control.",
+    "task": "Create an AI-first system that autonomously optimizes workflows, learns from historical context, and adapts to changing runtime inputs.",
+    "actions": [
+      "Integrated reinforcement-learning and LLM-driven agents for task prioritization, resource balancing, and exception routing.",
+      "Designed role-specific multi-agent components for prioritization, monitoring, and dynamic orchestration.",
+      "Built real-time insight and monitoring dashboards to surface workflow health and optimization recommendations.",
+      "Implemented adaptive allocation logic based on workload pressure, priority, and agent performance.",
+      "Deployed serverless workflows with AWS Lambda and integrated enterprise systems via RPA connectors."
+    ],
+    "result": "Reduced manual workflow effort by approximately 50 to 70 percent while improving operational responsiveness and decision quality.",
+    "tools": [
+      "Python",
+      "FastAPI",
+      "LangChain",
+      "React",
+      "MUI",
+      "Three.js",
+      "PostgreSQL",
+      "Firebase",
+      "AWS Lambda",
+      "Vercel",
+      "RPA Tools"
+    ],
+    "tags": ["Agentic AI", "FastAPI", "Workflow Automation"]
   },
   {
-    "id": "agentic-research-assistant",
-    "title": "agentic-research-assistant",
-    "description": "LangGraph-based research flow with Searcher, Summarizer, and Critic traceability.",
-    "tags": ["LangGraph", "FastAPI", "SSE"],
-    "github": "https://github.com/ramdragneel01/agentic-research-assistant"
+    "id": "credit-card-usage-analysis",
+    "title": "Credit Card Usage Analysis and User Activity Prediction",
+    "period": "Nov 2024 - Jan 2025",
+    "description": "Built user segmentation and activity prediction models with dashboard-based behavioral insights for personalization and fraud monitoring.",
+    "situation": "Financial datasets often lacked practical behavior intelligence for personalization and early fraud detection.",
+    "task": "Analyze spending behavior, cluster user cohorts, forecast activity, and identify anomalous transactions to support product and risk teams.",
+    "actions": [
+      "Performed end-to-end data cleaning, profiling, and exploratory analysis on historical card usage.",
+      "Created customer segments through clustering and trained predictive models for user activity forecasting.",
+      "Applied classification, regression, sequence modeling, and anomaly detection techniques for behavior risk signals.",
+      "Developed Power BI dashboards for category-level, temporal, and frequency-based spending analysis."
+    ],
+    "result": "Reached about 87 percent activity prediction accuracy and enabled stronger campaign targeting with earlier anomaly visibility.",
+    "tools": [
+      "Python",
+      "Power BI",
+      "Scikit-learn",
+      "XGBoost",
+      "Clustering",
+      "Regression",
+      "Sequence Modeling"
+    ],
+    "tags": ["Machine Learning", "Power BI", "XGBoost"]
+  },
+  {
+    "id": "generative-ai-domain-nlp",
+    "title": "Generative AI Solution for Large-Scale Domain-Specific NLP Tasks",
+    "period": "Aug 2024 - Oct 2024",
+    "description": "Built a generative NLP solution tuned for domain context to improve sentiment and content-generation quality.",
+    "situation": "Traditional NLP baselines struggled with nuanced language in domain-specific unstructured datasets.",
+    "task": "Deliver a high-accuracy generative NLP workflow for sentiment and content generation on specialized corpora.",
+    "actions": [
+      "Integrated GPT-4 through the OpenAI API and curated focused domain datasets for adaptation.",
+      "Fine-tuned and iteratively evaluated model behavior for higher contextual fidelity.",
+      "Optimized prompts and evaluation loops to better capture subtle linguistic variation in real user content."
+    ],
+    "result": "Improved NLP output quality and delivered roughly 28 percent accuracy uplift for targeted business use cases.",
+    "tools": [
+      "GPT-4",
+      "OpenAI API",
+      "Python",
+      "Custom Fine-Tuning",
+      "NLP",
+      "Sentiment Analysis"
+    ],
+    "tags": ["Generative AI", "NLP", "GPT-4"]
+  },
+  {
+    "id": "pizzeria-fullstack-ordering",
+    "title": "Pizzeria - Full-Stack Web Application for Custom Pizza Ordering",
+    "organization": "Accenture",
+    "description": "Delivered a modular full-stack ordering platform with customization flows and service-oriented backend design.",
+    "situation": "Conventional food-ordering flows lacked robust customization and responsive order lifecycle tracking.",
+    "task": "Build a scalable web app for custom pizza ordering with clean frontend UX and modular backend services.",
+    "actions": [
+      "Built dynamic React interfaces with hooks for interactive ordering and real-time state updates.",
+      "Implemented Node.js and Express APIs for order flow, inventory checks, and payment operations.",
+      "Used MongoDB for user and order persistence with a schema suitable for extensible options.",
+      "Split backend responsibilities into microservice-style modules to support future scale and feature growth."
+    ],
+    "result": "Improved ordering usability and operational flow with an architecture ready for loyalty and delivery-tracking extensions.",
+    "tools": [
+      "MongoDB",
+      "Express",
+      "React",
+      "Node.js",
+      "React Hooks",
+      "Microservices"
+    ],
+    "tags": ["MERN", "Full Stack", "Microservices"]
+  },
+  {
+    "id": "object-detection-audio-feedback",
+    "title": "Object Detection with Audio Feedback for Visually Impaired Users",
+    "organization": "Sri Chandrasekharendra Saraswathi Vishwa Mahavidyalaya, Kancheepuram",
+    "description": "Created an edge-deployable assistive vision system that detects and tracks objects, then provides real-time audio guidance.",
+    "situation": "Visually impaired users often lack reliable, low-latency assistive detection for safe navigation in unfamiliar surroundings.",
+    "task": "Build a lightweight object detection and tracking pipeline with audio feedback on resource-constrained hardware.",
+    "actions": [
+      "Implemented YOLOv3 plus Deep SORT for robust object detection and multi-object tracking.",
+      "Optimized model execution and video processing flow for Raspberry Pi deployment constraints.",
+      "Integrated OpenCV processing and text-to-speech alerts triggered by object class and proximity."
+    ],
+    "result": "Delivered reliable real-time assistive detection with low-latency edge inference and practical mobility support potential.",
+    "tools": [
+      "Python",
+      "OpenCV",
+      "YOLOv3",
+      "Deep SORT",
+      "Raspberry Pi",
+      "Edge Computing"
+    ],
+    "tags": ["Computer Vision", "YOLOv3", "Assistive AI"]
+  },
+  {
+    "id": "speech-emotion-recognition-ml",
+    "title": "Speech Emotion Recognition Using Machine Learning",
+    "organization": "Sri Chandrasekharendra Saraswathi Vishwa Mahavidyalaya, Kancheepuram",
+    "description": "Developed an audio-based emotion classifier using engineered speech features and supervised learning.",
+    "situation": "Emotion inference from speech is difficult due to speaker variability and signal-level acoustic variation.",
+    "task": "Classify emotion categories from raw speech samples for improved human-computer interaction scenarios.",
+    "actions": [
+      "Extracted MFCC, pitch, and short-term energy features from the RAVDESS dataset.",
+      "Preprocessed audio streams and engineered robust feature vectors for model training.",
+      "Trained and evaluated supervised classifiers to distinguish emotional states from voice patterns."
+    ],
+    "result": "Built a strong baseline classifier for emotional speech recognition suitable for assistive and conversational AI integration.",
+    "tools": [
+      "Python",
+      "Scikit-learn",
+      "MFCC",
+      "RAVDESS Dataset",
+      "SVM",
+      "Audio Feature Engineering"
+    ],
+    "tags": ["Audio ML", "Scikit-learn", "Emotion AI"]
   }
 ]

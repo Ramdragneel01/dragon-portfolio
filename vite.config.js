@@ -2,8 +2,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+const pagesBasePath = process.env.VITE_BASE_PATH || "/dragon-portfolio/";
+const isProductionBuild = process.env.NODE_ENV === "production";
+
 export default defineConfig({
   plugins: [react()],
+  base: isProductionBuild ? pagesBasePath : "/",
   server: {
     host: true,
     proxy: {
