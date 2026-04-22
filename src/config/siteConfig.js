@@ -48,8 +48,9 @@ export const siteConfig = {
   chat: {
     enabled: true,
     title: "Dragon Assistant",
-    welcomeMessage: "Ask me about Ram's projects, skills, or architecture decisions.",
-    placeholder: "Ask about projects...",
+    welcomeMessage:
+      "Are you here for hiring or just browsing? Select a mode first so I can tailor my responses.",
+    placeholder: "Ask a specific question about Ram's portfolio...",
     systemPrompt:
       "You are a concise assistant for Ram Prakash Dhulipudi's portfolio. Prioritize factual project summaries and practical impact.",
   },
