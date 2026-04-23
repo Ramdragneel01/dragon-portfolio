@@ -10,6 +10,24 @@ import usePortfolioData from "./hooks/usePortfolioData";
 import { siteConfig } from "./config/siteConfig";
 import projects from "./data/projects.json";
 
+const UPPERCASE_PROJECT_TOKENS = new Set([
+  "ai",
+  "ml",
+  "nlp",
+  "llm",
+  "api",
+  "ui",
+  "ux",
+  "rpa",
+  "ci",
+  "cd",
+  "aws",
+  "gcp",
+  "sql",
+  "etl",
+  "cv",
+]);
+
 /**
  * Format an ISO date string into a compact month/year label.
  *
@@ -30,6 +48,71 @@ function formatMonthYear(value) {
 }
 
 /**
+ * Convert repository-style headings into readable title case.
+ *
+ * @param {string | undefined} value Raw heading text.
+ * @param {string} [fallback="GitHub Repository"] Fallback heading.
+ * @returns {string} Normalized heading text.
+ */
+function formatProjectHeading(value, fallback = "GitHub Repository") {
+  const raw = typeof value === "string" ? value.trim() : "";
+  if (!raw) {
+    return fallback;
+  }
+
+  const normalized = raw.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+
+  return normalized
+    .split(" ")
+    .map((segment) => {
+      const alphaToken = segment.replace(/[^a-zA-Z]/g, "");
+      const lowerAlphaToken = alphaToken.toLowerCase();
+
+      if (alphaToken && UPPERCASE_PROJECT_TOKENS.has(lowerAlphaToken)) {
+        return segment.replace(alphaToken, alphaToken.toUpperCase());
+      }
+
+      if (/^[A-Z0-9]{2,}$/.test(segment)) {
+        return segment;
+      }
+
+      return segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase();
+    })
+    .join(" ");
+}
+
+/**
+ * Resolve repository description text while avoiding placeholder copy.
+ *
+ * @param {string | undefined} description Repository description.
+ * @param {string | undefined} readmeSummary Repository README summary.
+ * @param {string} projectTitle Display title for fallback copy.
+ * @returns {string} Display-ready description.
+ */
+function getProjectDescription(description, readmeSummary, projectTitle) {
+  const normalizedDescription = typeof description === "string" ? description.trim() : "";
+  const normalizedReadmeSummary = typeof readmeSummary === "string" ? readmeSummary.trim() : "";
+  const placeholderSet = new Set([
+    "no description provided yet.",
+    "no description provided",
+    "no description yet.",
+    "no description yet",
+    "no description.",
+    "no description",
+  ]);
+
+  if (normalizedDescription && !placeholderSet.has(normalizedDescription.toLowerCase())) {
+    return normalizedDescription;
+  }
+
+  if (normalizedReadmeSummary && !placeholderSet.has(normalizedReadmeSummary.toLowerCase())) {
+    return normalizedReadmeSummary;
+  }
+
+  return `Implementation details for ${projectTitle} are available in this repository.`;
+}
+
+/**
  * Convert a GitHub repository payload into STAR-friendly project metadata.
  *
  * @param {Record<string, any>} repo Normalized GitHub repository object.
@@ -41,14 +124,15 @@ function normalizeGithubProject(repo) {
   const stars = Number.isFinite(repo?.stars) ? repo.stars : 0;
   const forks = Number.isFinite(repo?.forks) ? repo.forks : 0;
   const readmeSummary = typeof repo?.readmeSummary === "string" ? repo.readmeSummary.trim() : "";
-  const baseDescription = repo?.description || readmeSummary || "Open-source engineering project published on GitHub.";
+  const displayTitle = formatProjectHeading(repo?.title || repo?.name || "GitHub Repository");
+  const baseDescription = getProjectDescription(repo?.description, readmeSummary, displayTitle);
 
   return {
     id: `github-${repo?.id || repo?.title || "repo"}`,
     source: "github",
-    title: repo?.title || "GitHub Repository",
+    title: displayTitle,
     organization: "GitHub Open Source",
-    period: `Updated ${updatedLabel}`,
+    period: `Updated in ${updatedLabel}`,
     description: baseDescription,
     situation:
       readmeSummary
@@ -75,7 +159,11 @@ function App() {
   const { data: profileData, loading, error } = usePortfolioData();
   const mergedProjects = useMemo(() => {
     const curatedProjects = Array.isArray(projects)
-      ? projects.map((project) => ({ ...project, source: project.source || "curated" }))
+      ? projects.map((project) => ({
+        ...project,
+        title: formatProjectHeading(project?.title, "Project"),
+        source: project.source || "curated",
+      }))
       : [];
 
     const curatedTitleIndex = new Set(

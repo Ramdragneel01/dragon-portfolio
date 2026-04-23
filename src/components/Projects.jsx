@@ -87,7 +87,7 @@ function Projects({ projects, config, loading = false }) {
                       </h3>
                       {project.organization || project.period ? (
                         <p className="mt-2 text-xs uppercase tracking-[0.14em] text-[var(--text-secondary)]">
-                          {[project.organization, project.period].filter(Boolean).join(" - ")}
+                          {[project.organization, project.period].filter(Boolean).join(" | ")}
                         </p>
                       ) : null}
                     </div>

@@ -33,7 +33,7 @@ async function buildGithubEnhancedFallbackData() {
     ? reposPayload.map((repo) => ({
         id: String(repo.id),
         title: repo.name,
-        description: repo.description || "No description provided yet.",
+      description: repo.description || "",
         readmeSummary: "",
         github: repo.html_url,
         tags: [repo.language, ...(repo.topics || [])].filter(Boolean).slice(0, 4),
