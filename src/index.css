@@ -687,6 +687,87 @@ textarea:focus-visible {
   .glass-button-secondary:hover {
     background: color-mix(in srgb, var(--glass-surface-strong) 84%, rgba(var(--accent-rgb), 0.2) 16%);
   }
+
+  .hero-metric-tooltip {
+    position: relative;
+  }
+
+  .hero-metric-tooltip--enabled {
+    cursor: default;
+  }
+
+  .hero-metric-tooltip__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid color-mix(in srgb, var(--glass-border) 84%, rgba(var(--accent-rgb), 0.28) 16%);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--glass-surface-strong) 82%, transparent 18%);
+    color: color-mix(in srgb, var(--text-secondary) 78%, rgba(var(--accent-rgb), 0.62) 22%);
+    font: inherit;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .hero-metric-tooltip__trigger:focus-visible {
+    outline: 2px solid var(--glass-focus);
+    outline-offset: 2px;
+  }
+
+  .hero-metric-tooltip__bubble {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 12px);
+    z-index: 20;
+    width: min(34rem, calc(100vw - 4rem));
+    border: 1px solid color-mix(in srgb, var(--glass-border) 86%, rgba(var(--accent-rgb), 0.2) 14%);
+    border-radius: 0.85rem;
+    background: color-mix(in srgb, var(--glass-surface-strong) 88%, transparent 12%);
+    box-shadow:
+      0 14px 26px color-mix(in srgb, var(--glass-shadow) 66%, transparent 34%),
+      inset 0 1px 0 rgba(255, 255, 255, 0.76);
+    backdrop-filter: blur(14px) saturate(155%);
+    -webkit-backdrop-filter: blur(14px) saturate(155%);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    padding: 0.58rem 0.72rem;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+    transition: opacity 200ms ease, transform 220ms ease;
+  }
+
+  .hero-metric-tooltip__bubble::before {
+    content: "";
+    position: absolute;
+    left: 1.1rem;
+    bottom: -6px;
+    width: 10px;
+    height: 10px;
+    background: inherit;
+    border-right: 1px solid color-mix(in srgb, var(--glass-border) 86%, rgba(var(--accent-rgb), 0.2) 14%);
+    border-bottom: 1px solid color-mix(in srgb, var(--glass-border) 86%, rgba(var(--accent-rgb), 0.2) 14%);
+    transform: rotate(45deg);
+  }
+
+  .hero-metric-tooltip--enabled:is(:hover, :focus-visible, :focus-within) .hero-metric-tooltip__bubble {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .hero-metric-tooltip--enabled:focus-visible {
+    outline: 2px solid var(--glass-focus);
+    outline-offset: 4px;
+    border-radius: 0.5rem;
+  }
 }
 
 .skeleton {

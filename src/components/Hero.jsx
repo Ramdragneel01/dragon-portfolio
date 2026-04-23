@@ -241,10 +241,10 @@ function HeroScene({ action, pointerBias, scrollProgress }) {
 /**
  * Render the portfolio hero section with 3D scene and typed role animation.
  *
- * @param {{config: Record<string, any>, profile: Record<string, any>, loading: boolean}} props Component props.
+ * @param {{config: Record<string, any>, profile: Record<string, any>, loading: boolean, error?: string}} props Component props.
  * @returns {JSX.Element} Hero section markup.
  */
-function Hero({ config, profile, loading }) {
+function Hero({ config, profile, loading, error = "" }) {
   const reduceMotion = useReducedMotion();
   const roles = profile?.identity?.roles?.length
     ? profile.identity.roles
@@ -312,6 +312,7 @@ function Hero({ config, profile, loading }) {
   const mediumUrl = profile?.contact?.medium || "https://medium.com/@RamPrakashD";
   const dragonAction = getDragonAction(scrollProgress);
   const actionLabel = getDragonActionLabel(dragonAction);
+  const githubMetricTooltip = typeof error === "string" && error.trim() ? error.trim() : "";
 
   /**
    * Map pointer coordinates from the hero scene card into normalized x/y bias values.
@@ -499,12 +500,31 @@ function Hero({ config, profile, loading }) {
           </div>
         ) : (
           <>
-            <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-[var(--text-secondary)]">GitHub</p>
+            <div
+              className={githubMetricTooltip ? "hero-metric-tooltip hero-metric-tooltip--enabled" : "hero-metric-tooltip"}
+            >
+              <div className="flex items-center gap-1.5">
+                <p className="text-xs uppercase tracking-[0.18em] text-[var(--text-secondary)]">GitHub</p>
+                {githubMetricTooltip ? (
+                  <button
+                    type="button"
+                    className="hero-metric-tooltip__trigger"
+                    aria-label="Show GitHub profile data source status"
+                    aria-describedby="github-metric-tooltip"
+                  >
+                    i
+                  </button>
+                ) : null}
+              </div>
               <p className="mt-1 text-2xl font-semibold text-[rgba(var(--accent-rgb),0.95)]">
                 {profile?.github?.profile?.publicRepos ?? 0}
               </p>
               <p className="text-sm text-[var(--text-secondary)]">Public repositories</p>
+              {githubMetricTooltip ? (
+                <span id="github-metric-tooltip" role="tooltip" className="hero-metric-tooltip__bubble">
+                  {githubMetricTooltip}
+                </span>
+              ) : null}
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.18em] text-[var(--text-secondary)]">Medium</p>

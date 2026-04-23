@@ -98,12 +98,6 @@ function App() {
       <StickyHeader />
 
       <main className="mx-auto max-w-6xl px-4 pb-16 pt-4 md:px-8 md:pt-6">
-        {error ? (
-          <div className="glass-card mt-4 rounded-xl px-4 py-3 text-sm text-[var(--text-secondary)]">
-            {error}
-          </div>
-        ) : null}
-
         <Routes>
           <Route
             path="/"
@@ -115,6 +109,7 @@ function App() {
                 apiBaseUrl={siteConfig.api.baseUrl}
                 profile={profileData}
                 loading={loading}
+                error={error}
               />
             )}
           />

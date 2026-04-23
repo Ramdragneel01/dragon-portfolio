@@ -12,14 +12,15 @@ import Hero from "../components/Hero";
  *   contactConfig: Record<string, any>,
  *   apiBaseUrl: string,
  *   profile: Record<string, any>,
- *   loading: boolean
+ *   loading: boolean,
+ *   error: string
  * }} props Component props.
  * @returns {JSX.Element} Home page section.
  */
-function HomePage({ identityConfig, aboutConfig, contactConfig, apiBaseUrl, profile, loading }) {
+function HomePage({ identityConfig, aboutConfig, contactConfig, apiBaseUrl, profile, loading, error }) {
     return (
         <>
-            <Hero config={identityConfig} profile={profile} loading={loading} />
+            <Hero config={identityConfig} profile={profile} loading={loading} error={error} />
             <About config={aboutConfig} profile={profile} loading={loading} />
             <Contact config={contactConfig} apiBaseUrl={apiBaseUrl} profile={profile} loading={loading} />
         </>
