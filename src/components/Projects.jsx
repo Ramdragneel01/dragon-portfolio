@@ -127,26 +127,26 @@ function Projects({ projects, config, loading = false }) {
                       src={project.imageUrl}
                       alt={`${project.title} preview`}
                       loading="lazy"
-                      className="mt-4 h-56 w-full rounded-2xl border border-[var(--glass-border)] object-cover"
+                      className="mt-4 h-56 w-full rounded-2xl object-cover"
                     />
                   ) : null}
 
                   {project.situation ? (
-                    <div className="mt-4 rounded-2xl border border-[var(--glass-border)] bg-[color-mix(in_srgb,var(--glass-surface)_72%,transparent_28%)] p-4">
+                    <div className="mt-4 rounded-2xl bg-[color-mix(in_srgb,var(--glass-surface)_58%,transparent_42%)] p-4">
                       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[rgba(var(--accent-rgb),0.95)]">Situation</p>
                       <p className="mt-2 text-sm text-[var(--text-secondary)]">{project.situation}</p>
                     </div>
                   ) : null}
 
                   {project.task ? (
-                    <div className="mt-3 rounded-2xl border border-[var(--glass-border)] bg-[color-mix(in_srgb,var(--glass-surface)_72%,transparent_28%)] p-4">
+                    <div className="mt-3 rounded-2xl bg-[color-mix(in_srgb,var(--glass-surface)_58%,transparent_42%)] p-4">
                       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[rgba(var(--accent-rgb),0.95)]">Task</p>
                       <p className="mt-2 text-sm text-[var(--text-secondary)]">{project.task}</p>
                     </div>
                   ) : null}
 
                   {actions.length ? (
-                    <div className="mt-3 rounded-2xl border border-[var(--glass-border)] bg-[color-mix(in_srgb,var(--glass-surface)_72%,transparent_28%)] p-4">
+                    <div className="mt-3 rounded-2xl bg-[color-mix(in_srgb,var(--glass-surface)_58%,transparent_42%)] p-4">
                       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[rgba(var(--accent-rgb),0.95)]">Action</p>
                       <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-[var(--text-secondary)]">
                         {actions.map((actionItem, actionIndex) => (
@@ -157,7 +157,7 @@ function Projects({ projects, config, loading = false }) {
                   ) : null}
 
                   {project.result ? (
-                    <div className="mt-3 rounded-2xl border border-[var(--glass-border)] bg-[color-mix(in_srgb,var(--glass-surface)_72%,transparent_28%)] p-4">
+                    <div className="mt-3 rounded-2xl bg-[color-mix(in_srgb,var(--glass-surface)_58%,transparent_42%)] p-4">
                       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[rgba(var(--accent-rgb),0.95)]">Result</p>
                       <p className="mt-2 text-sm text-[var(--text-secondary)]">{project.result}</p>
                     </div>

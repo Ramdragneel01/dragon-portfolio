@@ -17,7 +17,7 @@ export const siteConfig = {
   projects: {
     title: "Projects",
     subtitle:
-      "Curated STAR case studies plus live GitHub engineering projects in one unified portfolio.",
+      "Curated STAR case studies plus GitHub engineering projects in one unified portfolio.",
   },
   about: {
     title: "About",

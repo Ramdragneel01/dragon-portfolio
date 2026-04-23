@@ -308,6 +308,8 @@ function Hero({ config, profile, loading }) {
   const displayHeadline = getHeroHeadline(sourceHeadline, config?.heading);
   const displaySummary = profile?.identity?.summary || config?.summary;
   const displayLocation = profile?.identity?.location || "Hyderabad, India";
+  const githubUrl = profile?.contact?.github || "https://github.com/Ramdragneel01";
+  const mediumUrl = profile?.contact?.medium || "https://medium.com/@RamPrakashD";
   const dragonAction = getDragonAction(scrollProgress);
   const actionLabel = getDragonActionLabel(dragonAction);
 
@@ -416,6 +418,22 @@ function Hero({ config, profile, loading }) {
             >
               LinkedIn Profile
             </a>
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="glass-button-secondary rounded-full px-5 py-2.5 text-sm font-semibold"
+            >
+              GitHub
+            </a>
+            <a
+              href={mediumUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="glass-button-secondary rounded-full px-5 py-2.5 text-sm font-semibold"
+            >
+              Medium
+            </a>
           </div>
 
           {loading ? <p className="mt-4 text-sm text-[var(--text-secondary)]">Syncing live profile context...</p> : null}
@@ -447,8 +465,8 @@ function Hero({ config, profile, loading }) {
             <HeroScene action={dragonAction} pointerBias={pointerBias} scrollProgress={scrollProgress} />
           )}
 
-          <p className="pointer-events-none absolute bottom-4 left-4 z-10 text-xs uppercase tracking-[0.16em] text-[var(--text-secondary)]">
-            Scroll to shift dragon behavior
+          <p className="pointer-events-none absolute bottom-4 left-4 z-10 text-xs tracking-[0.04em] text-[var(--text-secondary)]">
+            Just a happy dragon I made over the weekend for fun.
           </p>
         </motion.div>
       </div>
