@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { getTheme, setTheme } from "../utils/theme";
+import ThemeToggle from "./ThemeToggle";
 
 const NAV_ITEMS = [
     { to: "/", label: "Home", end: true },
@@ -103,49 +104,12 @@ function StickyHeader() {
                 </nav>
 
                 <div className="flex flex-wrap items-center gap-1" role="group" aria-label="Theme switcher">
-                    <button
-                        type="button"
-                        onClick={handleThemeToggle}
-                        className="glass-chip inline-flex items-center gap-2 rounded-full px-2 py-1.5 transition hover:brightness-105"
-                        role="switch"
-                        aria-checked={isDarkTheme}
-                        aria-label={themeToggleLabel}
-                        title={themeToggleHint}
-                    >
-                        <span
-                            className={`inline-flex h-7 w-7 items-center justify-center rounded-full transition ${
-                                isDarkTheme
-                                    ? "text-[var(--text-secondary)] opacity-70"
-                                    : "bg-[rgba(var(--accent-rgb),0.18)] text-[rgba(var(--accent-rgb),0.98)]"
-                            }`}
-                            aria-hidden="true"
-                        >
-                            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-                                <circle cx="12" cy="12" r="4" />
-                                <path d="M12 2v2" />
-                                <path d="M12 20v2" />
-                                <path d="M4.93 4.93l1.41 1.41" />
-                                <path d="M17.66 17.66l1.41 1.41" />
-                                <path d="M2 12h2" />
-                                <path d="M20 12h2" />
-                                <path d="M4.93 19.07l1.41-1.41" />
-                                <path d="M17.66 6.34l1.41-1.41" />
-                            </svg>
-                        </span>
-
-                        <span
-                            className={`inline-flex h-7 w-7 items-center justify-center rounded-full transition ${
-                                isDarkTheme
-                                    ? "bg-[rgba(var(--accent-rgb),0.18)] text-[rgba(var(--accent-rgb),0.98)]"
-                                    : "text-[var(--text-secondary)] opacity-70"
-                            }`}
-                            aria-hidden="true"
-                        >
-                            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                            </svg>
-                        </span>
-                    </button>
+                    <ThemeToggle
+                        checked={isDarkTheme}
+                        onToggle={handleThemeToggle}
+                        label={themeToggleLabel}
+                        hint={themeToggleHint}
+                    />
                 </div>
             </div>
         </header>
