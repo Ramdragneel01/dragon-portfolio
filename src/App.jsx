@@ -90,7 +90,7 @@ function App() {
           .filter((project) => !curatedTitleIndex.has(String(project.title || "").trim().toLowerCase()))
       : [];
 
-    return [...curatedProjects, ...githubProjects];
+    return [...githubProjects, ...curatedProjects];
   }, [profileData]);
 
   return (
