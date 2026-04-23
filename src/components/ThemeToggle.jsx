@@ -15,27 +15,28 @@ import { motion, useReducedMotion } from "framer-motion";
  */
 function ThemeToggle({ checked, onToggle, label, hint = "", disabled = false }) {
   const reduceMotion = useReducedMotion();
+  const state = checked ? "night" : "day";
 
   const trackVariants = reduceMotion
     ? {
-        off: { scaleX: 1, scaleY: 1 },
-        on: { scaleX: 1, scaleY: 1 },
+        day: { scaleX: 1, scaleY: 1 },
+        night: { scaleX: 1, scaleY: 1 },
       }
     : {
-        off: { scaleX: [1, 0.965, 1.015, 1], scaleY: [1, 0.99, 1] },
-        on: { scaleX: [1, 0.965, 1.02, 1], scaleY: [1, 0.99, 1] },
+        day: { scaleX: [1, 0.972, 1.016, 1], scaleY: [1, 0.99, 1] },
+        night: { scaleX: [1, 0.97, 1.018, 1], scaleY: [1, 0.99, 1] },
       };
 
   const thumbVariants = {
-    off: {
+    day: {
       x: 4,
-      rotate: 0,
+      rotate: -8,
       scale: 1,
     },
-    on: {
+    night: {
       x: 50,
-      rotate: 16,
-      scale: 1.04,
+      rotate: 9,
+      scale: 1.03,
     },
   };
 
@@ -43,16 +44,10 @@ function ThemeToggle({ checked, onToggle, label, hint = "", disabled = false }) 
     ? { duration: 0 }
     : {
         type: "spring",
-        stiffness: 520,
+        stiffness: 500,
         damping: 22,
-        mass: 0.72,
+        mass: 0.74,
       };
-
-  const thumbCorePulse = reduceMotion
-    ? { scale: 1 }
-    : checked
-      ? { scale: [1, 1.18, 1] }
-      : { scale: [1, 1.12, 1] };
 
   return (
     <motion.button
@@ -70,7 +65,7 @@ function ThemeToggle({ checked, onToggle, label, hint = "", disabled = false }) 
       <motion.span
         className="aurora-toggle__track"
         initial={false}
-        animate={checked ? "on" : "off"}
+        animate={state}
         variants={trackVariants}
         transition={{
           duration: reduceMotion ? 0 : 0.44,
@@ -78,45 +73,33 @@ function ThemeToggle({ checked, onToggle, label, hint = "", disabled = false }) 
           ease: "easeOut",
         }}
       >
-        <span className="aurora-toggle__sweep" aria-hidden="true" />
+        <span className="aurora-toggle__sky-glow" aria-hidden="true" />
 
-        <span className="aurora-toggle__icon aurora-toggle__icon--sun" aria-hidden="true">
-          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="4" />
-            <path d="M12 2v2" />
-            <path d="M12 20v2" />
-            <path d="M4.93 4.93l1.41 1.41" />
-            <path d="M17.66 17.66l1.41 1.41" />
-            <path d="M2 12h2" />
-            <path d="M20 12h2" />
-            <path d="M4.93 19.07l1.41-1.41" />
-            <path d="M17.66 6.34l1.41-1.41" />
-          </svg>
+        <span className="aurora-toggle__rays" aria-hidden="true" />
+
+        <span className="aurora-toggle__stars" aria-hidden="true">
+          <span className="aurora-toggle__star aurora-toggle__star--1" />
+          <span className="aurora-toggle__star aurora-toggle__star--2" />
+          <span className="aurora-toggle__star aurora-toggle__star--3" />
+          <span className="aurora-toggle__star aurora-toggle__star--4" />
         </span>
 
-        <span className="aurora-toggle__icon aurora-toggle__icon--moon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-          </svg>
-        </span>
+        <span className="aurora-toggle__cloud aurora-toggle__cloud--back" aria-hidden="true" />
+        <span className="aurora-toggle__cloud aurora-toggle__cloud--front" aria-hidden="true" />
 
         <motion.span
           className="aurora-toggle__thumb"
           initial={false}
-          animate={checked ? "on" : "off"}
+          animate={state}
           variants={thumbVariants}
           transition={thumbTransition}
         >
-          <motion.span
-            className="aurora-toggle__thumb-core"
-            initial={false}
-            animate={thumbCorePulse}
-            transition={{
-              duration: reduceMotion ? 0 : 0.36,
-              times: reduceMotion ? undefined : [0, 0.56, 1],
-              ease: "easeOut",
-            }}
-          />
+          <span className="aurora-toggle__thumb-glint" aria-hidden="true" />
+          <span className="aurora-toggle__thumb-spots" aria-hidden="true">
+            <span className="aurora-toggle__thumb-spot aurora-toggle__thumb-spot--1" />
+            <span className="aurora-toggle__thumb-spot aurora-toggle__thumb-spot--2" />
+            <span className="aurora-toggle__thumb-spot aurora-toggle__thumb-spot--3" />
+          </span>
         </motion.span>
       </motion.span>
     </motion.button>
