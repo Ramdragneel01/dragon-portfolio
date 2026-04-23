@@ -86,8 +86,8 @@ function App() {
 
     const githubProjects = Array.isArray(profileData?.github?.repos)
       ? profileData.github.repos
-          .map(normalizeGithubProject)
-          .filter((project) => !curatedTitleIndex.has(String(project.title || "").trim().toLowerCase()))
+        .map(normalizeGithubProject)
+        .filter((project) => !curatedTitleIndex.has(String(project.title || "").trim().toLowerCase()))
       : [];
 
     return [...githubProjects, ...curatedProjects];
