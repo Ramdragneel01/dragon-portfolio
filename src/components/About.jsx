@@ -36,7 +36,7 @@ function About({ config, profile, loading = false }) {
   const testScores = profile?.testScores || [];
   const interests = profile?.identity?.interests || [];
   const linkedinUrl = profile?.contact?.linkedin || "https://www.linkedin.com/in/ramprakashdhulipudi/";
-  const summary = profile?.identity?.summary || config?.summary;
+  const summary = config?.summary || profile?.identity?.professionalSummary || profile?.identity?.summary;
 
   return (
     <section className="py-16" id="about">

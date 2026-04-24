@@ -193,6 +193,7 @@ function App() {
             element={(
               <HomePage
                 identityConfig={siteConfig.identity}
+                aboutConfig={siteConfig.about}
                 contactConfig={siteConfig.contact}
                 apiBaseUrl={siteConfig.api.baseUrl}
                 profile={profileData}
