@@ -255,6 +255,7 @@ function Hero({ config, profile, loading, error = "" }) {
   const [typed, setTyped] = useState("");
   const [scrollProgress, setScrollProgress] = useState(0);
   const [pointerBias, setPointerBias] = useState({ x: 0, y: 0 });
+  const [useGithubAvatarFallback, setUseGithubAvatarFallback] = useState(false);
 
   useEffect(() => {
     const full = roles[roleIndex % roles.length];
@@ -274,6 +275,14 @@ function Hero({ config, profile, loading, error = "" }) {
 
     return () => clearInterval(interval);
   }, [roleIndex, roles]);
+
+  const localAvatarUrl = `${import.meta.env.BASE_URL}asset/venkat.dhulipudi.jpg`;
+  const githubAvatarUrl = profile?.github?.profile?.avatarUrl?.trim() || "";
+  const preferredAvatarUrl = profile?.identity?.avatarUrl?.trim() || localAvatarUrl;
+
+  useEffect(() => {
+    setUseGithubAvatarFallback(false);
+  }, [preferredAvatarUrl, githubAvatarUrl]);
 
   useEffect(() => {
     let frame = 0;
@@ -303,7 +312,9 @@ function Hero({ config, profile, loading, error = "" }) {
 
   const displayName = profile?.identity?.name || config?.name;
   const displayPronouns = profile?.identity?.pronouns || "";
-  const displayAvatarUrl = profile?.identity?.avatarUrl || "";
+  const displayAvatarUrl = useGithubAvatarFallback
+    ? githubAvatarUrl
+    : preferredAvatarUrl || githubAvatarUrl;
   const sourceHeadline = profile?.identity?.headline || config?.heading;
   const displayHeadline = getHeroHeadline(sourceHeadline, config?.heading);
   const displaySummary = profile?.identity?.summary || config?.summary;
@@ -313,6 +324,10 @@ function Hero({ config, profile, loading, error = "" }) {
   const dragonAction = getDragonAction(scrollProgress);
   const actionLabel = getDragonActionLabel(dragonAction);
   const githubMetricTooltip = typeof error === "string" && error.trim() ? error.trim() : "";
+  const headlineTooltip =
+    typeof sourceHeadline === "string" && sourceHeadline.trim() && sourceHeadline.trim() !== displayHeadline
+      ? sourceHeadline.trim()
+      : "";
 
   /**
    * Map pointer coordinates from the hero scene card into normalized x/y bias values.
@@ -363,81 +378,101 @@ function Hero({ config, profile, loading, error = "" }) {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="glass-card-strong relative rounded-3xl p-8 md:p-10 lg:p-12"
         >
-          <p className="text-sm uppercase tracking-[0.25em] text-[rgba(var(--accent-rgb),0.95)]">{displayName}</p>
-          {displayPronouns ? (
-            <p className="mt-2 text-xs uppercase tracking-[0.16em] text-[var(--text-secondary)]">{displayPronouns}</p>
-          ) : null}
-          {displayAvatarUrl ? (
-            <img
-              src={displayAvatarUrl}
-              alt={`${displayName} profile`}
-              loading="lazy"
-              className="mt-4 h-16 w-16 rounded-2xl border border-[var(--glass-border)] object-cover"
-            />
-          ) : null}
-          <h1
-            className="mt-3 break-words font-display text-4xl leading-[0.95] sm:text-5xl md:text-6xl"
-            aria-label={sourceHeadline}
-            title={sourceHeadline}
-          >
-            {displayHeadline}
-          </h1>
-          <p className="mt-4 text-sm uppercase tracking-[0.2em] text-[var(--text-secondary)]">{displayLocation}</p>
-          {loading ? (
-            <div
-              className="mt-5 grid gap-2"
-              role="status"
-              aria-live="polite"
-              aria-label="Loading hero summary"
-              aria-busy="true"
-            >
-              <div className="skeleton skeleton-text" style={{ width: "92%" }} />
-              <div className="skeleton skeleton-text" style={{ width: "84%" }} />
-              <div className="skeleton skeleton-text" style={{ width: "66%" }} />
+          <div className={displayAvatarUrl ? "grid gap-8 lg:grid-cols-[minmax(0,1fr)_17.5rem] lg:items-start" : "grid gap-8"}>
+            <div>
+              <p className="text-sm uppercase tracking-[0.25em] text-[rgba(var(--accent-rgb),0.95)]">{displayName}</p>
+              {displayPronouns ? (
+                <p className="mt-2 text-xs uppercase tracking-[0.16em] text-[var(--text-secondary)]">{displayPronouns}</p>
+              ) : null}
+              <div
+                className={headlineTooltip ? "hero-headline-tooltip hero-headline-tooltip--enabled" : "hero-headline-tooltip"}
+              >
+                <h1
+                  className="mt-3 break-words font-display text-4xl leading-[0.95] sm:text-5xl md:text-6xl"
+                  aria-label={sourceHeadline}
+                >
+                  {displayHeadline}
+                </h1>
+                {headlineTooltip ? (
+                  <span role="tooltip" className="hero-headline-tooltip__bubble">
+                    {headlineTooltip}
+                  </span>
+                ) : null}
+              </div>
+              <p className="mt-4 text-sm uppercase tracking-[0.2em] text-[var(--text-secondary)]">{displayLocation}</p>
+              {loading ? (
+                <div
+                  className="mt-5 grid gap-2"
+                  role="status"
+                  aria-live="polite"
+                  aria-label="Loading hero summary"
+                  aria-busy="true"
+                >
+                  <div className="skeleton skeleton-text" style={{ width: "92%" }} />
+                  <div className="skeleton skeleton-text" style={{ width: "84%" }} />
+                  <div className="skeleton skeleton-text" style={{ width: "66%" }} />
+                </div>
+              ) : (
+                <p className="mt-5 text-lg text-[var(--text-secondary)] md:text-xl">{displaySummary}</p>
+              )}
+
+              <div className="mt-6 h-9 text-lg text-[rgba(var(--accent-rgb),0.95)] md:text-xl" aria-live="polite">
+                {typed}
+                <span className="ml-1 inline-block h-6 w-[2px] animate-pulse bg-[rgba(var(--accent-rgb),0.9)] align-middle" />
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  to="/projects"
+                  className="glass-button-primary rounded-full px-5 py-2.5 text-sm font-semibold transition"
+                >
+                  Explore Projects
+                </Link>
+                <a
+                  href={profile?.contact?.linkedin || "https://www.linkedin.com/in/ramprakashdhulipudi/"}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="glass-button-secondary rounded-full px-5 py-2.5 text-sm font-semibold"
+                >
+                  LinkedIn Profile
+                </a>
+                <a
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="glass-button-secondary rounded-full px-5 py-2.5 text-sm font-semibold"
+                >
+                  GitHub
+                </a>
+                <a
+                  href={mediumUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="glass-button-secondary rounded-full px-5 py-2.5 text-sm font-semibold"
+                >
+                  Medium
+                </a>
+              </div>
+
+              {loading ? <p className="mt-4 text-sm text-[var(--text-secondary)]">Syncing live profile context...</p> : null}
             </div>
-          ) : (
-            <p className="mt-5 text-lg text-[var(--text-secondary)] md:text-xl">{displaySummary}</p>
-          )}
 
-          <div className="mt-6 h-9 text-lg text-[rgba(var(--accent-rgb),0.95)] md:text-xl" aria-live="polite">
-            {typed}
-            <span className="ml-1 inline-block h-6 w-[2px] animate-pulse bg-[rgba(var(--accent-rgb),0.9)] align-middle" />
+            {displayAvatarUrl ? (
+              <div className="glass-card-soft mx-auto w-full max-w-[18rem] overflow-hidden rounded-3xl p-2 lg:mx-0 lg:justify-self-end">
+                <img
+                  src={displayAvatarUrl}
+                  alt={`${displayName} portrait`}
+                  loading="lazy"
+                  className="h-[19rem] w-full rounded-[1.25rem] object-cover object-top sm:h-[22rem]"
+                  onError={() => {
+                    if (!useGithubAvatarFallback && githubAvatarUrl && displayAvatarUrl !== githubAvatarUrl) {
+                      setUseGithubAvatarFallback(true);
+                    }
+                  }}
+                />
+              </div>
+            ) : null}
           </div>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/projects"
-              className="glass-button-primary rounded-full px-5 py-2.5 text-sm font-semibold transition"
-            >
-              Explore Projects
-            </Link>
-            <a
-              href={profile?.contact?.linkedin || "https://www.linkedin.com/in/ramprakashdhulipudi/"}
-              target="_blank"
-              rel="noreferrer"
-              className="glass-button-secondary rounded-full px-5 py-2.5 text-sm font-semibold"
-            >
-              LinkedIn Profile
-            </a>
-            <a
-              href={githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="glass-button-secondary rounded-full px-5 py-2.5 text-sm font-semibold"
-            >
-              GitHub
-            </a>
-            <a
-              href={mediumUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="glass-button-secondary rounded-full px-5 py-2.5 text-sm font-semibold"
-            >
-              Medium
-            </a>
-          </div>
-
-          {loading ? <p className="mt-4 text-sm text-[var(--text-secondary)]">Syncing live profile context...</p> : null}
         </motion.div>
 
         <motion.div
