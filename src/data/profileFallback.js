@@ -9,7 +9,7 @@ const profileFallback = {
     roles: ["ML Engineer", "Packaged App Developer", "Data Scientist", "GenAI Builder"],
     location: "Hyderabad, Telangana, India",
     summary:
-      "I am a Data Scientist and Software Engineer passionate about solving real-world problems through machine learning, frontend development, and software engineering. Currently working as a Packaged App Developer (ASE) at Accenture, I contribute to internal AI products in R&D that improve operational efficiency using frontend, ML, and cloud technologies. I am an absolute learner at heart and aspire to lead transformative AI and MLOps projects while staying curious, driven, and growth-oriented.",
+      "I am a Data Scientist and Software Engineer passionate about solving real-world problems through machine learning, frontend development, and software engineering. Currently working as a Packaged App Developer at Accenture, I contribute to internal AI products in R&D that improve operational efficiency using frontend, ML, and cloud technologies. I am an absolute learner at heart and aspire to lead transformative AI and MLOps projects while staying curious, driven, and growth-oriented.",
     interests: [
       "Machine Learning",
       "Data Science",
@@ -154,7 +154,7 @@ const profileFallback = {
     },
     {
       company: "Accenture",
-      role: "Packaged App Development (ASE)",
+      role: "Packaged App Development",
       period: "Apr 2024 - Present",
       highlights: [
         "Contributing to R&D in Accenture Product Platform with multiplatform frontend development across AI-driven products.",
