@@ -12,6 +12,9 @@ Production-ready React + Node portfolio for Ram Prakash Dhulipudi with cinematic
 - Curated LinkedIn context rendered into About and profile sections
 - Chatbot and contact flow via backend proxies
 - API service with validation, rate limiting, CORS, and request tracing
+- Top 3 featured portfolio case studies with STAR conversion narrative
+- Measurable impact cards with quantified delivery outcomes
+- Release radar and maturity tags for flagship repository tracking
 
 ## Run locally
 
@@ -130,6 +133,15 @@ npm run lint
 npm run test
 npm run build
 ```
+
+## Week 7 Conversion Quality Highlights
+
+1. Added dedicated case-study treatment for the top three flagship projects.
+2. Added measurable impact cards to surface quantifiable outcomes in recruiter-friendly form.
+3. Added release radar with maturity tags to communicate delivery cadence and next release intent.
+4. Updated projects section narrative so the portfolio reads as a credible project index, not only a visual experience.
+
+Release target for this sprint: `v0.2.0`.
 
 ## API endpoints
 
