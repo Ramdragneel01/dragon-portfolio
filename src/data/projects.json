@@ -16,6 +16,27 @@
     ],
     "currentWork": "Enhancing edge-device feedback loops and annotation throughput on Raspberry Pi class devices for assistive scenarios.",
     "result": "Reduced model selection effort by about 60 percent and annotation effort by about 40 percent, improving experimentation speed and model fit quality.",
+    "featuredCaseStudy": true,
+    "maturityTag": "Production Hardening",
+    "releaseRadar": {
+      "latest": "v0.1.0",
+      "next": "v0.2.0",
+      "cadence": "Bi-weekly hardening sprint",
+      "status": "In Progress"
+    },
+    "impactCards": [
+      {
+        "label": "Model recommendation cycle",
+        "value": "-60%",
+        "evidence": "Dataset-to-model-fit decision time reduced through diagnostics and ranking automation."
+      },
+      {
+        "label": "Annotation effort",
+        "value": "-40%",
+        "evidence": "Pre-label + correction workflow accelerated object annotation throughput."
+      }
+    ],
+    "github": "https://github.com/Ramdragneel01/automated-ml-prediction-annotation-system",
     "tools": [
       "Python",
       "Scikit-learn",
@@ -47,6 +68,27 @@
       "Deployed serverless workflows with AWS Lambda and integrated enterprise systems via RPA connectors."
     ],
     "result": "Reduced manual workflow effort by approximately 50 to 70 percent while improving operational responsiveness and decision quality.",
+    "featuredCaseStudy": true,
+    "maturityTag": "Scale-Up",
+    "releaseRadar": {
+      "latest": "v0.1.0",
+      "next": "v0.2.0",
+      "cadence": "Bi-weekly orchestration sprint",
+      "status": "In Progress"
+    },
+    "impactCards": [
+      {
+        "label": "Manual workflow effort",
+        "value": "-50% to -70%",
+        "evidence": "Autonomous prioritization and exception routing reduced human intervention load."
+      },
+      {
+        "label": "Agent roles in production flow",
+        "value": "3",
+        "evidence": "Prioritization, monitoring, and orchestration agents split responsibilities clearly."
+      }
+    ],
+    "github": "https://github.com/Ramdragneel01/autonomous-workflow-optimization-agents",
     "tools": [
       "Python",
       "FastAPI",
@@ -76,6 +118,27 @@
       "Developed Power BI dashboards for category-level, temporal, and frequency-based spending analysis."
     ],
     "result": "Reached about 87 percent activity prediction accuracy and enabled stronger campaign targeting with earlier anomaly visibility.",
+    "featuredCaseStudy": true,
+    "maturityTag": "Production Baseline",
+    "releaseRadar": {
+      "latest": "v0.1.0",
+      "next": "v0.2.0",
+      "cadence": "Monthly model refresh",
+      "status": "Planned"
+    },
+    "impactCards": [
+      {
+        "label": "Activity prediction accuracy",
+        "value": "87%",
+        "evidence": "Forecasting pipeline reached stable accuracy for campaign and risk segmentation scenarios."
+      },
+      {
+        "label": "Behavior signal families",
+        "value": "4",
+        "evidence": "Classification, regression, sequence modeling, and anomaly detection used for coverage."
+      }
+    ],
+    "github": "https://github.com/Ramdragneel01/credit-card-usage-analysis-prediction",
     "tools": [
       "Python",
       "Power BI",

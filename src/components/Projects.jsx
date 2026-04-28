@@ -8,6 +8,33 @@ import { motion } from "framer-motion";
  * @returns {JSX.Element} Projects section.
  */
 function Projects({ projects, config, loading = false }) {
+  const featuredCaseStudies = Array.isArray(projects)
+    ? projects.filter((project) => project?.featuredCaseStudy).slice(0, 3)
+    : [];
+
+  const measurableImpactCards = featuredCaseStudies.flatMap((project) => {
+    const cards = Array.isArray(project?.impactCards) ? project.impactCards : [];
+    return cards.map((card, cardIndex) => ({
+      id: `${project.id}-impact-${cardIndex}`,
+      projectTitle: project.title,
+      label: card?.label || "Impact",
+      value: card?.value || "Measured",
+      evidence: card?.evidence || "",
+    }));
+  });
+
+  const releaseRadarRows = featuredCaseStudies
+    .filter((project) => project?.releaseRadar)
+    .map((project) => ({
+      id: project.id,
+      title: project.title,
+      maturityTag: project.maturityTag || "Emerging",
+      latest: project.releaseRadar?.latest || "n/a",
+      next: project.releaseRadar?.next || "n/a",
+      cadence: project.releaseRadar?.cadence || "n/a",
+      status: project.releaseRadar?.status || "Planned",
+    }));
+
   return (
     <section className="py-16" id="projects">
       <motion.h2
@@ -28,6 +55,125 @@ function Projects({ projects, config, loading = false }) {
       >
         {config?.subtitle}
       </motion.p>
+
+      {featuredCaseStudies.length ? (
+        <div className="mt-8 space-y-6">
+          {measurableImpactCards.length ? (
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[rgba(var(--accent-rgb),0.95)]">
+                Measurable Impact Cards
+              </p>
+              <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {measurableImpactCards.map((card) => (
+                  <div key={card.id} className="glass-card-soft rounded-2xl p-4">
+                    <p className="text-xs uppercase tracking-[0.14em] text-[var(--text-secondary)]">{card.projectTitle}</p>
+                    <p className="mt-2 text-2xl font-bold text-[rgba(var(--accent-rgb),0.95)]">{card.value}</p>
+                    <p className="mt-1 text-sm font-semibold text-[var(--text-primary)]">{card.label}</p>
+                    {card.evidence ? (
+                      <p className="mt-2 text-sm text-[var(--text-secondary)]">{card.evidence}</p>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[rgba(var(--accent-rgb),0.95)]">
+              Top 3 Case Studies
+            </p>
+            <div className="mt-3 grid gap-4 lg:grid-cols-3">
+              {featuredCaseStudies.map((project, index) => (
+                <motion.article
+                  key={`${project.id}-featured`}
+                  className="glass-card rounded-3xl p-5"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ amount: 0.2, once: true }}
+                  transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-xs uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                      Case Study {index + 1}
+                    </p>
+                    {project.maturityTag ? (
+                      <span className="glass-chip rounded-full px-3 py-1 text-xs text-[rgba(var(--accent-rgb),0.95)]">
+                        {project.maturityTag}
+                      </span>
+                    ) : null}
+                  </div>
+                  <h3 className="mt-2 text-lg font-semibold text-[var(--text-primary)]">{project.title}</h3>
+                  <p className="mt-2 text-sm text-[var(--text-secondary)]">{project.description}</p>
+                  {project.situation ? (
+                    <p className="mt-3 text-sm text-[var(--text-secondary)]">
+                      <span className="font-semibold text-[var(--text-primary)]">Situation:</span> {project.situation}
+                    </p>
+                  ) : null}
+                  {project.task ? (
+                    <p className="mt-2 text-sm text-[var(--text-secondary)]">
+                      <span className="font-semibold text-[var(--text-primary)]">Task:</span> {project.task}
+                    </p>
+                  ) : null}
+                  {Array.isArray(project.actions) && project.actions.length ? (
+                    <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm text-[var(--text-secondary)]">
+                      {project.actions.slice(0, 2).map((actionItem, actionIndex) => (
+                        <li key={`${project.id}-featured-action-${actionIndex}`}>{actionItem}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {project.result ? (
+                    <p className="mt-3 text-sm text-[var(--text-secondary)]">
+                      <span className="font-semibold text-[var(--text-primary)]">Result:</span> {project.result}
+                    </p>
+                  ) : null}
+                </motion.article>
+              ))}
+            </div>
+          </div>
+
+          {releaseRadarRows.length ? (
+            <div className="glass-card rounded-3xl p-6 md:p-8">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[rgba(var(--accent-rgb),0.95)]">
+                  Release Radar
+                </p>
+                <p className="text-xs text-[var(--text-secondary)]">Maturity tags and next release targets</p>
+              </div>
+              <div className="mt-4 overflow-x-auto">
+                <table className="min-w-full text-left text-sm">
+                  <thead>
+                    <tr className="text-xs uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                      <th className="pb-3 pr-4 font-semibold">Project</th>
+                      <th className="pb-3 pr-4 font-semibold">Maturity</th>
+                      <th className="pb-3 pr-4 font-semibold">Latest</th>
+                      <th className="pb-3 pr-4 font-semibold">Next</th>
+                      <th className="pb-3 pr-4 font-semibold">Cadence</th>
+                      <th className="pb-3 font-semibold">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {releaseRadarRows.map((row) => (
+                      <tr key={`${row.id}-release`} className="border-t border-[color:color-mix(in_srgb,var(--glass-border)_58%,transparent_42%)]">
+                        <td className="py-3 pr-4 font-semibold text-[var(--text-primary)]">{row.title}</td>
+                        <td className="py-3 pr-4">
+                          <span className="glass-chip rounded-full px-3 py-1 text-xs text-[rgba(var(--accent-rgb),0.95)]">
+                            {row.maturityTag}
+                          </span>
+                        </td>
+                        <td className="py-3 pr-4 text-[var(--text-secondary)]">{row.latest}</td>
+                        <td className="py-3 pr-4 text-[var(--text-secondary)]">{row.next}</td>
+                        <td className="py-3 pr-4 text-[var(--text-secondary)]">{row.cadence}</td>
+                        <td className="py-3 text-[var(--text-secondary)]">{row.status}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+
       <div className="mt-8">
         {loading ? (
           <div
