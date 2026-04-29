@@ -173,6 +173,16 @@ npm run build
 
 Release target for this sprint: `v0.2.0`.
 
+## Week 9 Open Source Visibility Notes
+
+1. External contribution target increased to 3 PRs for the sprint week.
+2. Meaningful issue-comment target increased to 5 technical comments.
+3. Contribution evidence links are tracked from profile README notes to keep public activity auditable.
+
+## Contributor Credits
+
+1. @Ramdragneel01 - sprint planning, implementation, quality validation, and release publication.
+
 ## API endpoints
 
 - GET `/api/health`
