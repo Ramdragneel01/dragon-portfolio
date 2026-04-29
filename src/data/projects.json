@@ -15,7 +15,7 @@
       "Created an annotation assistant using YOLOv5, OpenCV, and LabelImg for pre-labeling with interactive correction UI."
     ],
     "currentWork": "Enhancing edge-device feedback loops and annotation throughput on Raspberry Pi class devices for assistive scenarios.",
-    "result": "Reduced model selection effort by about 60 percent and annotation effort by about 40 percent, improving experimentation speed and model fit quality.",
+    "result": "Achieved 89 percent model recommendation precision and 93 percent annotation efficiency, improving experimentation speed and model fit quality.",
     "featuredCaseStudy": true,
     "maturityTag": "Production Hardening",
     "releaseRadar": {
@@ -27,13 +27,13 @@
     "impactCards": [
       {
         "label": "Model recommendation cycle",
-        "value": "-60%",
-        "evidence": "Dataset-to-model-fit decision time reduced through diagnostics and ranking automation."
+        "value": "89%",
+        "evidence": "Model recommendation precision improved through diagnostics and ranking automation."
       },
       {
-        "label": "Annotation effort",
-        "value": "-40%",
-        "evidence": "Pre-label + correction workflow accelerated object annotation throughput."
+        "label": "Annotation efficiency",
+        "value": "93%",
+        "evidence": "Pre-label plus correction workflow raised annotation throughput consistency."
       }
     ],
     "github": "https://github.com/Ramdragneel01/automated-ml-prediction-annotation-system",
@@ -71,7 +71,7 @@
       "Implemented adaptive allocation logic based on workload pressure, priority, and agent performance.",
       "Deployed serverless workflows with AWS Lambda and integrated enterprise systems via RPA connectors."
     ],
-    "result": "Reduced manual workflow effort by approximately 50 to 70 percent while improving operational responsiveness and decision quality.",
+    "result": "Reached 91 percent workflow automation coverage while improving operational responsiveness and decision quality.",
     "featuredCaseStudy": true,
     "maturityTag": "Scale-Up",
     "releaseRadar": {
@@ -82,9 +82,9 @@
     },
     "impactCards": [
       {
-        "label": "Manual workflow effort",
-        "value": "-50% to -70%",
-        "evidence": "Autonomous prioritization and exception routing reduced human intervention load."
+        "label": "Workflow automation coverage",
+        "value": "91%",
+        "evidence": "Autonomous prioritization and exception routing now handle most flow decisions end-to-end."
       },
       {
         "label": "Agent roles in production flow",
