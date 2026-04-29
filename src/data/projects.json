@@ -50,7 +50,11 @@
       "Vertex AI Vizier",
       "MCP API"
     ],
-    "tags": ["Python", "MLOps", "Computer Vision"]
+    "tags": [
+      "Python",
+      "MLOps",
+      "Computer Vision"
+    ]
   },
   {
     "id": "autonomous-workflow-optimization-agentathon",
@@ -102,7 +106,11 @@
       "Vercel",
       "RPA Tools"
     ],
-    "tags": ["Agentic AI", "FastAPI", "Workflow Automation"]
+    "tags": [
+      "Agentic AI",
+      "FastAPI",
+      "Workflow Automation"
+    ]
   },
   {
     "id": "credit-card-usage-analysis",
@@ -148,7 +156,11 @@
       "Regression",
       "Sequence Modeling"
     ],
-    "tags": ["Machine Learning", "Power BI", "XGBoost"]
+    "tags": [
+      "Machine Learning",
+      "Power BI",
+      "XGBoost"
+    ]
   },
   {
     "id": "generative-ai-domain-nlp",
@@ -171,7 +183,11 @@
       "NLP",
       "Sentiment Analysis"
     ],
-    "tags": ["Generative AI", "NLP", "GPT-4"]
+    "tags": [
+      "Generative AI",
+      "NLP",
+      "GPT-4"
+    ]
   },
   {
     "id": "pizzeria-fullstack-ordering",
@@ -195,7 +211,11 @@
       "React Hooks",
       "Microservices"
     ],
-    "tags": ["MERN", "Full Stack", "Microservices"]
+    "tags": [
+      "MERN",
+      "Full Stack",
+      "Microservices"
+    ]
   },
   {
     "id": "object-detection-audio-feedback",
@@ -218,7 +238,11 @@
       "Raspberry Pi",
       "Edge Computing"
     ],
-    "tags": ["Computer Vision", "YOLOv3", "Assistive AI"]
+    "tags": [
+      "Computer Vision",
+      "YOLOv3",
+      "Assistive AI"
+    ]
   },
   {
     "id": "speech-emotion-recognition-ml",
@@ -241,6 +265,10 @@
       "SVM",
       "Audio Feature Engineering"
     ],
-    "tags": ["Audio ML", "Scikit-learn", "Emotion AI"]
+    "tags": [
+      "Audio ML",
+      "Scikit-learn",
+      "Emotion AI"
+    ]
   }
 ]
