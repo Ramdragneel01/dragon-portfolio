@@ -6,5 +6,16 @@ export default defineConfig({
     include: ["src/**/*.test.{js,jsx}"],
     environment: "node",
     globals: true,
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "lcov"],
+      include: ["src/utils/**/*.js"],
+      thresholds: {
+        lines: 55,
+        functions: 80,
+        branches: 40,
+        statements: 55,
+      },
+    },
   },
 });

@@ -3,6 +3,19 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.3.0] - 2026-04-29
+
+### Added
+
+1. CI quality gates now include coverage and runtime dependency-audit checks.
+2. Release workflow consistency with semantic-tag triggered verification and artifact publication.
+3. Dependabot automation and a formal dependency update policy document (`DEPENDENCY_POLICY.md`).
+4. Additional utility coverage tests for theme behavior in `src/utils/theme.test.js`.
+
+### Contributor Credits
+
+1. @Ramdragneel01 - quality-gate design, CI/release automation, dependency policy, and validation.
+
 ## [0.2.1] - 2026-04-29
 
 ### Added

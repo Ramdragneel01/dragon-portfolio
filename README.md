@@ -183,6 +183,15 @@ Release target for this sprint: `v0.2.0`.
 
 1. @Ramdragneel01 - sprint planning, implementation, quality validation, and release publication.
 
+## Week 10 Quality-Gate Automation
+
+1. CI now includes coverage and runtime dependency-audit gates.
+2. Release workflow is aligned to semantic tags (`v*.*.*`) with release artifact publishing.
+3. Dependabot configuration is enabled for weekly npm dependency updates.
+4. Dependency review and rollout rules are defined in `DEPENDENCY_POLICY.md`.
+
+Release target for this sprint: `v0.3.0`.
+
 ## API endpoints
 
 - GET `/api/health`
