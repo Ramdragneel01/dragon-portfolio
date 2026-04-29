@@ -20,7 +20,7 @@ async function buildGithubEnhancedFallbackData() {
 
   const [profileResponse, reposResponse] = await Promise.all([
     fetch(`https://api.github.com/users/${fallbackUsername}`),
-    fetch(`https://api.github.com/users/${fallbackUsername}/repos?sort=updated&per_page=8&type=owner`),
+    fetch(`https://api.github.com/users/${fallbackUsername}/repos?sort=updated&per_page=30&type=owner`),
   ]);
 
   if (!profileResponse.ok || !reposResponse.ok) {

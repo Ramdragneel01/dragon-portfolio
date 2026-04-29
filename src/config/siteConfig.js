@@ -6,6 +6,36 @@ export const siteConfig = {
     summary:
       "I build production AI systems and scalable frontend platforms with a strong focus on trust, observability, and shipping velocity.",
     roles: ["Data Scientist", "ML Engineer", "React Architect", "GenAI Builder"],
+    achievements: [
+      {
+        value: "91%",
+        label: "Workflow automation coverage",
+        evidence: "Autonomous prioritization and exception routing across multi-agent workflows.",
+        projectUrl: "https://github.com/Ramdragneel01/autonomous-workflow-optimization-agents",
+        projectLabel: "View project",
+      },
+      {
+        value: "89%",
+        label: "Model recommendation precision",
+        evidence: "Dataset diagnostics and ranking automation improved model fit selection.",
+        projectUrl: "https://github.com/Ramdragneel01/automated-ml-prediction-annotation-system",
+        projectLabel: "View project",
+      },
+      {
+        value: "93%",
+        label: "Annotation efficiency",
+        evidence: "Pre-label plus correction loops accelerated computer-vision annotation throughput.",
+        projectUrl: "https://github.com/Ramdragneel01/automated-ml-prediction-annotation-system",
+        projectLabel: "View project",
+      },
+      {
+        value: "2-5 days",
+        label: "Collaboration response window",
+        evidence: "Best-effort reply window for project-fit discussions and technical collaboration.",
+        projectUrl: "https://github.com/Ramdragneel01/dragon-portfolio",
+        projectLabel: "View portfolio",
+      },
+    ],
   },
   sections: [
     { id: "hero", component: "Hero", enabled: true },
@@ -43,6 +73,18 @@ export const siteConfig = {
       sending: "Sending...",
       success: "Message sent successfully.",
       failure: "Could not send message right now.",
+    },
+    collaboration: {
+      title: "Open To Collaborate",
+      summary:
+        "I collaborate on high-signal AI and frontend platform work where reliability, observability, and measurable delivery outcomes matter.",
+      topics: [
+        "Trustworthy RAG evaluation and benchmark design",
+        "MLOps reliability and observability loops",
+        "Enterprise micro-frontend hardening and release governance",
+      ],
+      availability: ["Hyderabad, India", "Remote collaboration", "Project and platform engagements"],
+      responseExpectation: "Best-effort response within 2 to 5 business days.",
     },
   },
   chat: {

@@ -734,7 +734,7 @@ async function fetchGithubPayload() {
     fetch(`https://api.github.com/users/${githubUsername}`, {
       headers: getGithubHeaders(),
     }),
-    fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=8&type=owner`, {
+    fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=30&type=owner`, {
       headers: getGithubHeaders(),
     }),
   ]);

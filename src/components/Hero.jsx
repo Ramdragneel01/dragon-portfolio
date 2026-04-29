@@ -395,6 +395,11 @@ function Hero({ config, profile, loading, error = "" }) {
   const displayHeadline = getHeroHeadline(sourceHeadline, config?.heading);
   const displaySummary = profile?.identity?.summary || config?.summary;
   const displayLocation = profile?.identity?.location || "Hyderabad, India";
+  const heroAchievements = Array.isArray(config?.achievements)
+    ? config.achievements
+      .filter((item) => item?.value && item?.label)
+      .slice(0, 4)
+    : [];
   const githubUrl = profile?.contact?.github || "https://github.com/Ramdragneel01";
   const mediumUrl = profile?.contact?.medium || "https://medium.com/@RamPrakashD";
   const dragonAction = getDragonAction(scrollProgress);
@@ -656,6 +661,44 @@ function Hero({ config, profile, loading, error = "" }) {
           </>
         )}
       </motion.div>
+
+      {heroAchievements.length ? (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.2, once: true }}
+          transition={{ duration: 0.6, delay: 0.16, ease: "easeOut" }}
+          className="glass-card mt-6 rounded-2xl p-4"
+        >
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[rgba(var(--accent-rgb),0.95)]">
+              Highlighted Outcomes
+            </p>
+            <p className="text-xs text-[var(--text-secondary)]">Outcome-first snapshot</p>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {heroAchievements.map((achievement) => (
+              <article key={`${achievement.label}-${achievement.value}`} className="glass-card-soft rounded-2xl p-4">
+                <p className="text-2xl font-bold text-[rgba(var(--accent-rgb),0.95)]">{achievement.value}</p>
+                <p className="mt-1 text-sm font-semibold text-[var(--text-primary)]">{achievement.label}</p>
+                {achievement.evidence ? (
+                  <p className="mt-2 text-xs text-[var(--text-secondary)]">{achievement.evidence}</p>
+                ) : null}
+                {achievement.projectUrl ? (
+                  <a
+                    href={achievement.projectUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="glass-button-secondary mt-3 inline-flex rounded-full px-3 py-1.5 text-xs font-semibold"
+                  >
+                    {achievement.projectLabel || "View project"}
+                  </a>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </motion.div>
+      ) : null}
     </section>
   );
 }

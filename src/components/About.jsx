@@ -13,6 +13,61 @@ const SKILLS = [
 
 const CERTIFICATION_PREVIEW_COUNT = 8;
 
+const SKILL_GROUP_RULES = [
+  {
+    title: "AI and ML",
+    matcher:
+      /(machine learning|artificial intelligence|\bai\b|\bml\b|llm|nlp|prompt|computer vision|deep learning|rag|mlops|yolo|emotion|speech)/i,
+  },
+  {
+    title: "Frontend and Web",
+    matcher: /(react|next\.?js|javascript|typescript|mern|web|frontend|ui|ux|micro-frontend)/i,
+  },
+  {
+    title: "Cloud and Platform",
+    matcher: /(aws|gcp|azure|docker|kubernetes|gitlab|github|copilot|vertex|api)/i,
+  },
+  {
+    title: "Data and Foundations",
+    matcher: /(python|sql|oracle|dbms|data structures|operating systems|object-oriented|statistical|analysis|oop)/i,
+  },
+];
+
+/**
+ * Group skill labels into high-signal recruiter-friendly categories.
+ *
+ * @param {Array<string>} skillLabels Flat list of skill names.
+ * @returns {Array<{title: string, items: string[]}>} Grouped skill entries.
+ */
+function buildSkillGroups(skillLabels) {
+  const uniqueSkillLabels = Array.from(
+    new Set(
+      (Array.isArray(skillLabels) ? skillLabels : [])
+        .map((label) => (typeof label === "string" ? label.trim() : ""))
+        .filter(Boolean)
+    )
+  );
+
+  if (!uniqueSkillLabels.length) {
+    return [];
+  }
+
+  const groupedItems = SKILL_GROUP_RULES.map((rule) => ({
+    title: rule.title,
+    items: [],
+  }));
+
+  for (const label of uniqueSkillLabels) {
+    const ruleIndex = SKILL_GROUP_RULES.findIndex((rule) => rule.matcher.test(label));
+
+    if (ruleIndex >= 0) {
+      groupedItems[ruleIndex].items.push(label);
+    }
+  }
+
+  return groupedItems.filter((group) => group.items.length);
+}
+
 /**
  * Render profile background with skill bars, language proficiency, and experience highlights.
  *
@@ -24,6 +79,12 @@ function About({ config, profile, loading = false }) {
 
   const skills = profile?.topSkills?.length ? profile.topSkills : config?.skills?.length ? config.skills : SKILLS;
   const additionalSkills = Array.isArray(profile?.skills) ? profile.skills : [];
+  const skillGroups = buildSkillGroups([
+    ...skills
+      .map((skill) => (typeof skill === "string" ? skill : skill?.name))
+      .filter(Boolean),
+    ...additionalSkills,
+  ]);
   const languages = profile?.languages || [];
   const experience = profile?.experience || [];
   const certifications = profile?.certifications || [];
@@ -119,6 +180,34 @@ function About({ config, profile, loading = false }) {
             </motion.aside>
           </div>
 
+          {skillGroups.length ? (
+            <motion.div
+              className="glass-card mt-6 rounded-3xl p-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ amount: 0.2, once: true }}
+              transition={{ duration: 0.6, delay: 0.11, ease: "easeOut" }}
+            >
+              <h3 className="text-xl font-semibold">Skill Categories</h3>
+              <div className="mt-4 grid gap-3 md:grid-cols-2">
+                {skillGroups.map((group) => (
+                  <article key={group.title} className="glass-card-soft rounded-2xl p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[rgba(var(--accent-rgb),0.95)]">
+                      {group.title}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {group.items.map((item) => (
+                        <span key={`${group.title}-${item}`} className="glass-chip rounded-full px-3 py-1 text-xs text-[var(--text-primary)]">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </motion.div>
+          ) : null}
+
           {additionalSkills.length ? (
             <motion.div
               className="glass-card mt-6 rounded-3xl p-6"
@@ -127,7 +216,7 @@ function About({ config, profile, loading = false }) {
               viewport={{ amount: 0.2, once: true }}
               transition={{ duration: 0.6, delay: 0.12, ease: "easeOut" }}
             >
-              <h3 className="text-xl font-semibold">Additional Skills</h3>
+              <h3 className="text-xl font-semibold">All Skills</h3>
               <div className="mt-4 flex flex-wrap gap-2">
                 {additionalSkills.map((skillName) => (
                   <span key={skillName} className="glass-chip rounded-full px-3 py-1 text-xs text-[var(--text-primary)]">
