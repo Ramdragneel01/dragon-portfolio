@@ -18,17 +18,20 @@ async function buildGithubEnhancedFallbackData() {
     profileFallback?.contact?.github?.split("/").pop() ||
     "Ramdragneel01";
 
-  const [profileResponse, reposResponse] = await Promise.all([
+  const [profileResult, reposResult] = await Promise.allSettled([
     fetch(`https://api.github.com/users/${fallbackUsername}`),
-    fetch(`https://api.github.com/users/${fallbackUsername}/repos?sort=updated&per_page=30&type=owner`),
+    fetch(`https://api.github.com/users/${fallbackUsername}/repos?sort=updated&per_page=100&type=owner`),
   ]);
 
-  if (!profileResponse.ok || !reposResponse.ok) {
+  const profileResponse = profileResult.status === "fulfilled" ? profileResult.value : null;
+  const reposResponse = reposResult.status === "fulfilled" ? reposResult.value : null;
+  const profilePayload = profileResponse?.ok ? await profileResponse.json() : null;
+  const reposPayload = reposResponse?.ok ? await reposResponse.json() : [];
+
+  if (!profilePayload && (!Array.isArray(reposPayload) || !reposPayload.length)) {
     throw new Error("GitHub fallback request failed");
   }
 
-  const profilePayload = await profileResponse.json();
-  const reposPayload = await reposResponse.json();
   const normalizedRepos = Array.isArray(reposPayload)
     ? reposPayload.map((repo) => ({
         id: String(repo.id),
@@ -47,18 +50,44 @@ async function buildGithubEnhancedFallbackData() {
     ...profileFallback,
     github: {
       profile: {
-        username: profilePayload.login || fallbackUsername,
-        avatarUrl: profilePayload.avatar_url || "",
-        followers: profilePayload.followers || 0,
-        following: profilePayload.following || 0,
-        publicRepos: profilePayload.public_repos || normalizedRepos.length,
-        bio: profilePayload.bio || "",
-        profileUrl: profilePayload.html_url || `https://github.com/${fallbackUsername}`,
+        username: profilePayload?.login || fallbackUsername,
+        avatarUrl: profilePayload?.avatar_url || "",
+        followers: profilePayload?.followers || 0,
+        following: profilePayload?.following || 0,
+        publicRepos:
+          profilePayload?.public_repos ||
+          normalizedRepos.length ||
+          profileFallback?.github?.profile?.publicRepos ||
+          27,
+        bio: profilePayload?.bio || "",
+        profileUrl: profilePayload?.html_url || `https://github.com/${fallbackUsername}`,
       },
-      repos: normalizedRepos,
+      repos: normalizedRepos.length ? normalizedRepos : profileFallback?.github?.repos || [],
     },
     updatedAt: new Date().toISOString(),
   };
+}
+
+/**
+ * Determine whether an API payload needs GitHub repo hydration.
+ *
+ * @param {Record<string, any>} payload Profile payload from backend.
+ * @returns {boolean} True when repository data is missing or suspiciously low.
+ */
+function shouldHydrateGithubRepos(payload) {
+  const apiRepos = Array.isArray(payload?.github?.repos) ? payload.github.repos : [];
+  const apiRepoCount = apiRepos.length;
+  const publicRepoCount = Number(payload?.github?.profile?.publicRepos) || 0;
+
+  if (!apiRepoCount) {
+    return true;
+  }
+
+  if (publicRepoCount > 0 && apiRepoCount < Math.min(publicRepoCount, 12)) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -91,12 +120,35 @@ export default function usePortfolioData() {
         }
 
         const payload = await response.json();
+        let resolvedPayload = payload;
+        let hydrationApplied = false;
+
+        if (shouldHydrateGithubRepos(payload)) {
+          try {
+            const enhancedFallback = await buildGithubEnhancedFallbackData();
+            resolvedPayload = {
+              ...payload,
+              github: enhancedFallback.github,
+              updatedAt: payload?.updatedAt || enhancedFallback.updatedAt,
+            };
+            hydrationApplied = true;
+          } catch {
+            hydrationApplied = false;
+          }
+        }
+
         if (!isMounted) {
           return;
         }
 
-        setData(payload);
-        setError("");
+        setData(resolvedPayload);
+        if (hydrationApplied && !silent) {
+          setError(
+            "Live profile API returned partial GitHub data. Recovered repository snapshot from public GitHub feed."
+          );
+        } else {
+          setError("");
+        }
       } catch (fetchError) {
         if (!isMounted || fetchError.name === "AbortError") {
           return;

@@ -18,6 +18,7 @@ const anthropicModel = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-20250514"
 const anthropicFastModel = process.env.ANTHROPIC_FAST_MODEL || "claude-3-5-haiku-latest";
 const corsOrigins = parseCorsOrigins(process.env.CORS_ORIGINS);
 const githubUsername = process.env.GITHUB_USERNAME || "Ramdragneel01";
+const githubPublicReposFallback = parsePositiveInteger(process.env.GITHUB_PUBLIC_REPOS_FALLBACK, 27);
 const mediumUsername = process.env.MEDIUM_USERNAME || "RamPrakashD";
 const mediumTotalArticlesFallback = parsePositiveInteger(process.env.MEDIUM_TOTAL_ARTICLES, 10);
 const chatMaxTokens = parsePositiveInteger(process.env.CHAT_MAX_TOKENS, 300);
@@ -730,26 +731,31 @@ async function fetchGithubReadmeSummary(owner, repoName) {
  * Fetch profile and repository metadata from GitHub.
  */
 async function fetchGithubPayload() {
-  const [profileResponse, repositoriesResponse] = await Promise.all([
-    fetch(`https://api.github.com/users/${githubUsername}`, {
-      headers: getGithubHeaders(),
-    }),
-    fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=30&type=owner`, {
-      headers: getGithubHeaders(),
-    }),
-  ]);
+  const profileResponse = await fetch(`https://api.github.com/users/${githubUsername}`, {
+    headers: getGithubHeaders(),
+  });
 
-  if (!profileResponse.ok || !repositoriesResponse.ok) {
+  if (!profileResponse.ok) {
     throw new Error("GitHub profile request failed");
   }
 
   const profile = await profileResponse.json();
-  const repositories = await repositoriesResponse.json();
+  const repositoriesResponse = await fetch(
+    `https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=100&type=owner`,
+    {
+      headers: getGithubHeaders(),
+    }
+  );
+
+  const repositories = repositoriesResponse.ok ? await repositoriesResponse.json() : [];
   const repositoryOwner = profile?.login || githubUsername;
+  const readmeSummaryLimit = 12;
   const normalizedRepos = Array.isArray(repositories)
     ? await Promise.all(
-        repositories.map(async (repo) => {
-          const readmeSummary = await fetchGithubReadmeSummary(repositoryOwner, repo.name);
+        repositories.map(async (repo, index) => {
+          const readmeSummary = index < readmeSummaryLimit
+            ? await fetchGithubReadmeSummary(repositoryOwner, repo.name)
+            : "";
           return {
             id: String(repo.id),
             title: repo.name,
@@ -823,7 +829,7 @@ async function getProfilePayload() {
             avatarUrl: "",
             followers: 0,
             following: 0,
-            publicRepos: 0,
+            publicRepos: githubPublicReposFallback,
             bio: "",
             profileUrl: `https://github.com/${githubUsername}`,
           },

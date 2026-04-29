@@ -10,6 +10,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import usePortfolioData from "./hooks/usePortfolioData";
 import { siteConfig } from "./config/siteConfig";
 import projects from "./data/projects.json";
+import profileFallback from "./data/profileFallback";
 
 const UPPERCASE_PROJECT_TOKENS = new Set([
   "ai",
@@ -173,8 +174,21 @@ function App() {
         .filter(Boolean)
     );
 
-    const githubProjects = Array.isArray(profileData?.github?.repos)
-      ? profileData.github.repos
+    const liveGithubRepos = Array.isArray(profileData?.github?.repos) ? profileData.github.repos : [];
+    const fallbackGithubRepos = Array.isArray(profileFallback?.github?.repos) ? profileFallback.github.repos : [];
+    const mergedGithubRepoMap = new Map();
+
+    for (const repo of [...liveGithubRepos, ...fallbackGithubRepos]) {
+      const identityKey = String(repo?.github || repo?.id || repo?.title || "").trim().toLowerCase();
+      if (!identityKey || mergedGithubRepoMap.has(identityKey)) {
+        continue;
+      }
+
+      mergedGithubRepoMap.set(identityKey, repo);
+    }
+
+    const githubProjects = mergedGithubRepoMap.size
+      ? Array.from(mergedGithubRepoMap.values())
         .map(normalizeGithubProject)
         .filter((project) => !curatedTitleIndex.has(String(project.title || "").trim().toLowerCase()))
       : [];
