@@ -16,6 +16,30 @@ Production-ready React + Node portfolio for Ram Prakash Dhulipudi with cinematic
 - Measurable impact cards with quantified delivery outcomes
 - Release radar and maturity tags for flagship repository tracking
 
+## Architecture Snapshot
+
+```mermaid
+flowchart LR
+	Visitor[Browser visitor] --> Frontend[React and Vite frontend]
+	Frontend --> API[Node and Express API]
+	API --> GitHub[GitHub profile and repository proxy]
+	API --> Medium[Medium RSS proxy]
+	API --> Chat[Anthropic chat proxy]
+	API --> Contact[EmailJS contact proxy]
+```
+
+## Quick Start
+
+```bash
+npm install
+npm run dev
+```
+
+Open:
+
+1. Frontend: http://127.0.0.1:5173
+2. Backend API health: http://127.0.0.1:8080/api/health
+
 ## Run locally
 
 ```bash
@@ -134,6 +158,12 @@ npm run test
 npm run build
 ```
 
+## Testing
+
+1. Run unit tests: `npm run test`.
+2. Run lint gate: `npm run lint`.
+3. Run production build check: `npm run build`.
+
 ## Week 7 Conversion Quality Highlights
 
 1. Added dedicated case-study treatment for the top three flagship projects.
@@ -155,3 +185,15 @@ Release target for this sprint: `v0.2.0`.
 - Anthropic and EmailJS credentials are server-side only.
 - Frontend communicates through backend endpoints only.
 - Backend applies input validation and rate limiting.
+
+## Limitations
+
+1. Public frontend deployment depends on a separately hosted backend for live profile, chat, and contact capabilities.
+2. Large 3D scene payloads can increase initial bundle size on low-bandwidth clients.
+3. External feed and API availability can affect live content freshness.
+
+## Roadmap
+
+1. Add dynamic code-splitting for heavy scene and visualization modules to reduce first-load cost.
+2. Add cached API response strategy with expiration telemetry for profile and feed endpoints.
+3. Add end-to-end Playwright flows for contact and chat critical paths.
