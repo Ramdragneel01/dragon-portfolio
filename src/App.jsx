@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AboutPage from "./pages/AboutPage";
 import Chatbot from "./components/Chatbot";
+import Footer from "./components/Footer";
 import StickyHeader from "./components/StickyHeader";
 import HomePage from "./pages/HomePage";
 import InsightsPage from "./pages/InsightsPage";
@@ -231,6 +232,8 @@ function App() {
       {siteConfig.chat.enabled ? (
         <Chatbot config={siteConfig.chat} apiBaseUrl={siteConfig.api.baseUrl} />
       ) : null}
+
+      <Footer />
     </div>
   );
 }
