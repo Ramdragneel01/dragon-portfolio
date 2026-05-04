@@ -1,0 +1,17 @@
+# CODEOWNERS for dragon-portfolio
+# Default owner for all files in the repository.
+* @Ramdragneel01
+
+# Workflow and CI ownership
+/.github/ @Ramdragneel01
+
+# Backend API
+/server/ @Ramdragneel01
+
+# Frontend source
+/src/ @Ramdragneel01
+
+# Documentation and governance
+/docs/ @Ramdragneel01
+/SECURITY.md @Ramdragneel01
+/ARCHITECTURE.md @Ramdragneel01

@@ -3,6 +3,18 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.4.0] - 2026-05-04
+
+### Added
+
+1. Production checklist baseline closure: added `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, `ARCHITECTURE.md`, `CODEOWNERS`, and `.claude/CLAUDE.md`.
+2. Week 11 measured outcomes document (`docs/WEEK11_MEASURED_OUTCOMES.md`) with before/after metrics.
+3. Checklist coverage raised from 5/12 to 12/12.
+
+### Contributor Credits
+
+1. @Ramdragneel01 - governance baseline, documentation, and checklist uplift.
+
 ## [0.3.0] - 2026-04-29
 
 ### Added

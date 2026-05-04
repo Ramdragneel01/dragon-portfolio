@@ -192,6 +192,10 @@ Release target for this sprint: `v0.2.0`.
 
 Release target for this sprint: `v0.3.0`.
 
+## Week 11 Measured Outcomes
+
+Before and after outcomes are documented in `docs/WEEK11_MEASURED_OUTCOMES.md`.
+
 ## API endpoints
 
 - GET `/api/health`
