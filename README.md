@@ -3,6 +3,16 @@
 
 Production-ready React + Node portfolio for Ram Prakash Dhulipudi with cinematic UI, live profile integrations, and secure API proxies.
 
+## Visual Evidence
+
+Portfolio hero (live at [ramdragneel01.github.io/dragon-portfolio](https://ramdragneel01.github.io/dragon-portfolio/)):
+
+![dragon-portfolio hero](docs/assets/portfolio-hero.png)
+
+Projects page with impact cards:
+
+![dragon-portfolio projects](docs/assets/portfolio-projects.png)
+
 ## Included in this build
 
 - 3D hero scene using React Three Fiber
