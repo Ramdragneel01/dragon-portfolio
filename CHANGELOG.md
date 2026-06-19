@@ -3,6 +3,17 @@
 
 All notable changes to this project are documented in this file.
 
+## [Unreleased]
+
+### Added
+
+1. Edge-case unit tests for `chatRuntime` helpers (non-string visitor modes, default browsing prompt fallback, oversized base-prompt clamping, missing-mode intro messages, browsing-mode compensation guarding).
+2. Additional `buildApiUrl` tests for empty base URLs and multi-segment endpoint paths.
+
+### Contributor Credits
+
+1. @Ramdragneel01 - test hardening for chat runtime and API helpers.
+
 ## [0.4.0] - 2026-05-04
 
 ### Added
