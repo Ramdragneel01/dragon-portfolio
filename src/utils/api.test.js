@@ -12,4 +12,14 @@ describe("buildApiUrl", () => {
   it("handles trailing slash and leading slash safely", () => {
     expect(buildApiUrl("/chat", "https://api.example.com/")).toBe("https://api.example.com/chat");
   });
+
+  it("produces a root-relative path when the base URL is empty", () => {
+    expect(buildApiUrl("profile", "")).toBe("/profile");
+  });
+
+  it("preserves multi-segment endpoint paths", () => {
+    expect(buildApiUrl("v1/chat/stream", "https://api.example.com/api/")).toBe(
+      "https://api.example.com/api/v1/chat/stream"
+    );
+  });
 });

@@ -45,4 +45,33 @@ describe("chatRuntime", () => {
     const reply = buildLocalPortfolioReply("What is his expected salary?", VISITOR_MODES.HIRING);
     expect(reply).toContain("Compensation expectations");
   });
+
+  it("normalizes non-string visitor mode inputs to an empty string", () => {
+    expect(normalizeVisitorMode(null)).toBe("");
+    expect(normalizeVisitorMode(undefined)).toBe("");
+    expect(normalizeVisitorMode(123)).toBe("");
+    expect(normalizeVisitorMode({})).toBe("");
+  });
+
+  it("defaults to a browsing prompt and base text when inputs are missing", () => {
+    const prompt = buildModeSystemPrompt(undefined, undefined);
+    expect(prompt).toContain("You are a concise assistant");
+    expect(prompt).toContain("Visitor intent is browsing");
+  });
+
+  it("clamps oversized base prompts to a safe length", () => {
+    const prompt = buildModeSystemPrompt("x".repeat(600), VISITOR_MODES.BROWSING);
+    expect(prompt.startsWith("x".repeat(500))).toBe(true);
+    expect(prompt.includes("x".repeat(501))).toBe(false);
+  });
+
+  it("falls back to the configured intro message when no mode is selected", () => {
+    expect(getInitialAssistantMessage("Welcome aboard", undefined)).toBe("Welcome aboard");
+    expect(getInitialAssistantMessage(undefined, "unknown")).toContain("hiring or just browsing");
+  });
+
+  it("does not expose the compensation guard in browsing mode", () => {
+    const reply = buildLocalPortfolioReply("What is his expected salary?", VISITOR_MODES.BROWSING);
+    expect(reply).not.toContain("Compensation expectations");
+  });
 });
