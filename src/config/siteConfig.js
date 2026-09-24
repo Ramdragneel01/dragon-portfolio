@@ -55,6 +55,11 @@ export const siteConfig = {
     title: "About",
     summary:
       "I design trustworthy AI and ML products with production observability, resilient architecture, and measurable business outcomes.",
+    paragraphs: [
+      "Most people online know me as dragon. I am 24, and I work as a Forward Deployed Engineer while pursuing an MSc in Advanced Computer Science at the University of Liverpool. I like leading from the front, staying close to the people I work with, and shipping things that solve real problems.",
+      "My journey started with a BE in Computer Science with a 9.17 CGPA, then early R&D roles at Infyleads, IVIS International, and Accenture. Today, I focus on trustworthy RAG, AI observability, and micro-frontend architecture while keeping my work practical and product-focused. I also earned the GCP Professional ML Engineer certification and a Tech Expert badge along the way.",
+      "Outside work, anime, manga, and Japanese culture keep my creative side alive, and a spiritual mindset keeps me intentional without being religious. I communicate directly, care about impact, and keep learning fast & am focused on ML and data science, and building toward reliable systems teams can trust in production.",
+    ],
     skills: [
       { name: "Python", level: 95 },
       { name: "Machine Learning", level: 94 },

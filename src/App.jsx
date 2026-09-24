@@ -221,7 +221,7 @@ function App() {
             path="/projects"
             element={<ProjectsPage projects={mergedProjects} config={siteConfig.projects} loading={loading} />}
           />
-          <Route path="/about" element={<AboutPage />} />
+          <Route path="/about" element={<AboutPage config={siteConfig.about} />} />
           <Route path="/medium" element={<InsightsPage profile={profileData} loading={loading} />} />
           <Route path="/insights" element={<Navigate to="/medium" replace />} />
           <Route path="/contact" element={<Navigate to="/" replace />} />
