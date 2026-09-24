@@ -21,16 +21,16 @@ function AboutPage() {
 
                 <div className="mt-4 space-y-4 text-sm leading-relaxed text-[var(--text-secondary)] md:text-base">
                     <p>
-                        Most people online know me as dragon. I am 24, and I build AI and ML products in R&D at
-                        Accenture India. I like leading from the front, staying close to the people I work with, and
-                        shipping things that solve real problems.
+                        Most people online know me as dragon. I am 24, and I work as a Forward Deployed Engineer while
+                        pursuing an MSc in Advanced Computer Science at the University of Liverpool. I like leading from
+                        the front, staying close to the people I work with, and shipping things that solve real problems.
                     </p>
                     <p>
                         My journey started with a BE in Computer Science with a 9.17 CGPA, then early R&D roles at
-                        Infyleads and IVIS International before Accenture. At Accenture, I built config-driven UI suites
-                        and AI observability dashboards in React and Next.js, and helped deliver an LLM chatbot with a
-                        Python backend. I earned the GCP Professional ML Engineer certification and a Tech Expert badge
-                        while keeping my work practical and product-focused.
+                        Infyleads, IVIS International, and Accenture. Today, I focus on trustworthy RAG, AI
+                        observability, and micro-frontend architecture while keeping my work practical and
+                        product-focused. I also earned the GCP Professional ML Engineer certification and a Tech Expert
+                        badge along the way.
                     </p>
                     <p>
                         Outside work, anime, manga, and Japanese culture keep my creative side alive, and a spiritual

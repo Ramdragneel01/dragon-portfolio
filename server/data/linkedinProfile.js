@@ -5,9 +5,9 @@ const linkedinProfile = {
     pronouns: "He/Him",
     avatarUrl: "",
     headline:
-      "ML Engineer | Packaged App Development @ Accenture | 9x Google-Certified | GCP Professional ML Engineer | Trustworthy RAG | AI Observability | Micro-Frontend Architecture",
+      "Forward Deployed Engineer | MSc Advanced CS @ University of Liverpool | 9x Google-Certified | GCP Professional ML Engineer | Trustworthy RAG | AI Observability | Micro-Frontend Architecture | Basketball🏀",
     roles: ["Data Scientist", "ML Engineer", "React Architect", "GenAI Builder"],
-    location: "Hyderabad, Telangana, India",
+    location: "Greater Liverpool Area, United Kingdom",
     summary:
       "I build production AI systems and scalable frontend platforms with a strong focus on trust, observability, and shipping velocity.",
     interests: [
@@ -18,7 +18,7 @@ const linkedinProfile = {
       "Micro-Frontend Architecture",
       "AWS",
       "AI Observability",
-      "Basketball",
+      "Basketball🏀",
     ],
   },
   contact: {

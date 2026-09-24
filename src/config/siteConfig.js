@@ -2,7 +2,9 @@
 export const siteConfig = {
   identity: {
     name: "(Venkat Sampath Siva) Ram Prakash Dhulipudi | dragon",
-    heading: "ML Engineer | Packaged App Development @ Accenture | GCP Professional ML Engineer",
+    heading:
+      "Forward Deployed Engineer | MSc Advanced CS @ University of Liverpool | 9x Google-Certified | GCP Professional ML Engineer | Trustworthy RAG | AI Observability | Micro-Frontend Architecture | Basketball🏀",
+    location: "Greater Liverpool Area, United Kingdom",
     summary:
       "I build production AI systems and scalable frontend platforms with a strong focus on trust, observability, and shipping velocity.",
     roles: ["Data Scientist", "ML Engineer", "React Architect", "GenAI Builder"],
@@ -83,7 +85,11 @@ export const siteConfig = {
         "MLOps reliability and observability loops",
         "Enterprise micro-frontend hardening and release governance",
       ],
-      availability: ["Hyderabad, India", "Remote collaboration", "Project and platform engagements"],
+      availability: [
+        "Greater Liverpool Area, United Kingdom",
+        "Remote collaboration",
+        "Project and platform engagements",
+      ],
       responseExpectation: "Best-effort response within 2 to 5 business days.",
     },
   },

@@ -394,7 +394,7 @@ function Hero({ config, profile, loading, error = "" }) {
   const sourceHeadline = profile?.identity?.headline || config?.heading;
   const displayHeadline = getHeroHeadline(sourceHeadline, config?.heading);
   const displaySummary = profile?.identity?.summary || config?.summary;
-  const displayLocation = profile?.identity?.location || "Hyderabad, India";
+  const displayLocation = profile?.identity?.location || config?.location || "Greater Liverpool Area, United Kingdom";
   const heroAchievements = Array.isArray(config?.achievements)
     ? config.achievements
       .filter((item) => item?.value && item?.label)
