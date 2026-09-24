@@ -28,8 +28,8 @@ function AboutPage({ config }) {
                 <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] md:text-3xl">{title}</h1>
 
                 <div className="mt-4 space-y-4 text-sm leading-relaxed text-[var(--text-secondary)] md:text-base">
-                    {paragraphs.map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
+                    {paragraphs.map((paragraph, index) => (
+                        <p key={`${index}-${title}`}>{paragraph}</p>
                     ))}
                 </div>
             </motion.div>
